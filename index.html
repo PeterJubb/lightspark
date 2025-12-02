@@ -2,556 +2,517 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lightspark × Bank X — Demo Index</title>
+  <title>Lightspark × Bank X – Demo Index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --ls-blue: #3d20ae;
-      --ls-green: #3bf49c;
-      --ls-red: #d65c5c;
-      --ls-yellow: #ffd645;
-      --ls-navy: #1e1f33;
-      --ls-slate: #4a5568;
-      --ls-soft-grey: #f5f7fa;
-      --ls-border: #e2e8f0;
-      --radius-card: 14px;
-      --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
-      --scale-gradient: linear-gradient(90deg, var(--ls-red) 0%, var(--ls-yellow) 50%, var(--ls-green) 100%);
+      /* Core brand colours */
+      --ls-blue:#3d20ae;
+      --ls-green:#3bf49c;
+      --ls-red:#d65c5c;
+      --ls-yellow:#ffd645;
+
+      /* Accents & UI greys */
+      --ls-navy:#1e1f33;
+      --ls-slate:#4a5568;
+      --ls-soft-grey:#f5f7fa;
+      --ls-border:#e2e8f0;
+
+      --radius-card:14px;
+      --shadow-card:0 10px 25px rgba(15,23,42,0.08);
+
+      /* LEFT = RED → RIGHT = GREEN scale */
+      --scale-gradient:linear-gradient(
+        90deg,
+        var(--ls-red) 0%,
+        var(--ls-yellow) 50%,
+        var(--ls-green) 100%
+      );
     }
 
-    * { box-sizing: border-box; }
+    *{box-sizing:border-box;}
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      background: var(--ls-soft-grey);
-      color: var(--ls-slate);
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Inter,sans-serif;
+      background:var(--ls-soft-grey);
+      color:var(--ls-slate);
     }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    /* Layout Container */
+    .page{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
 
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid var(--ls-border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    /* Header */
+    header{
+      background:#fff;
+      border-bottom:1px solid var(--ls-border);
+      position:sticky;
+      top:0;
+      z-index:10;
     }
 
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
+    .header-inner{
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
 
-    .logo-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+      font-size:20px;
+      color:var(--ls-blue);
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--ls-blue);
-      letter-spacing: 0.02em;
+    .logo-mark{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      background:radial-gradient(circle at 30% 20%, var(--ls-green), var(--ls-blue));
+      position:relative;
     }
 
-    .logo-mark {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, var(--ls-green), var(--ls-blue));
-      position: relative;
-      overflow: hidden;
+    .logo-mark::after{
+      content:"";
+      position:absolute;
+      inset:30% 25% auto;
+      height:2px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.9);
+      box-shadow:0 0 6px rgba(255,255,255,0.9);
     }
 
-    .logo-mark::after {
-      content: "";
-      position: absolute;
-      inset: 30% 24% auto;
-      height: 2px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+    .header-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
     }
 
-    .tagline {
-      font-size: 12px;
-      color: #64748b;
+    .header-tagline{
+      font-size:12px;
+      color:#64748b;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: rgba(61, 32, 174, 0.05);
-      color: var(--ls-blue);
-      border: 1px solid rgba(61, 32, 174, 0.18);
+    .pill{
+      padding:5px 12px;
+      border-radius:999px;
+      background:rgba(61,32,174,0.05);
+      border:1px solid rgba(61,32,174,0.2);
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:12px;
+      color:var(--ls-blue);
     }
 
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--ls-green);
+    .pill-dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--ls-green);
     }
 
-    main { flex: 1; }
+    /* Main Layout */
+    main{flex:1;}
 
-    .layout {
-      max-width: 1180px;
-      margin: 20px auto 48px;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: 1.6fr 1.4fr;
-      gap: 22px;
+    .layout{
+      max-width:1200px;
+      margin:24px auto 48px;
+      padding:0 24px;
+      display:grid;
+      grid-template-columns:1.7fr 1.3fr;
+      gap:24px;
+    }
+    @media(max-width:900px){
+      .layout{grid-template-columns:1fr;}
     }
 
-    @media (max-width: 960px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+    h1{margin:0;font-size:26px;font-weight:700;color:var(--ls-navy);}
+    h2{margin:0;font-size:20px;font-weight:600;color:var(--ls-navy);}
+
+    p{
+      margin:0;
+      font-size:14px;
+      line-height:1.5;
     }
 
-    h1, h2, h3 {
-      margin: 0;
-      color: var(--ls-navy);
-      font-weight: 600;
+    .section-title{
+      font-size:12px;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      margin-bottom:6px;
+      color:#94a3b8;
     }
 
-    h1 { font-size: 24px; letter-spacing: 0.01em; }
-    h2 { font-size: 18px; }
-    h3 { font-size: 15px; }
-
-    p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.5;
+    /* Cards */
+    .card{
+      background:#fff;
+      border-radius:var(--radius-card);
+      border:1px solid #d9dee7;
+      padding:24px;
+      box-shadow:var(--shadow-card);
     }
 
-    .section-title {
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #94a3b8;
-      margin-bottom: 4px;
+    .card + .card{margin-top:18px;}
+
+    /* Mini Metrics */
+    .mini-metrics{
+      margin-top:14px;
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(3,1fr);
+    }
+    @media(max-width:500px){
+      .mini-metrics{grid-template-columns:1fr;}
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: var(--radius-card);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      box-shadow: var(--shadow-card);
-      padding: 20px 20px 18px;
+    .mini{
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:10px;
+      padding:10px;
     }
 
-    .card + .card {
-      margin-top: 16px;
+    .mini-label{
+      font-size:10px;
+      letter-spacing:0.09em;
+      text-transform:uppercase;
+      color:#94a3b8;
     }
 
-    /* Mini metrics */
-    .mini-metrics {
-      margin-top: 14px;
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(3, 1fr);
+    .mini-value{
+      font-size:14px;
+      font-weight:600;
+      margin:4px 0 8px;
+      color:var(--ls-navy);
     }
 
-    @media (max-width: 500px) {
-      .mini-metrics {
-        grid-template-columns: 1fr;
-      }
+    .mini-bar{
+      height:6px;
+      border-radius:999px;
+      background:#e5e7eb;
+      overflow:hidden;
     }
 
-    .mini {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px;
+    .mini-bar-fill{
+      height:100%;
+      background:var(--scale-gradient);
     }
 
-    .mini-label {
-      font-size: 10px;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: #94a3b8;
+    /* Simple use case list */
+    .usecase-list{
+      margin-top:14px;
+      display:grid;
+      gap:10px;
     }
 
-    .mini-value {
-      font-size: 14px;
-      font-weight: 600;
-      margin: 4px 0 8px;
-      color: var(--ls-navy);
+    .usecase-card{
+      background:#f8fafc;
+      border-radius:12px;
+      border:1px solid #e2e8f0;
+      padding:10px 12px;
+      font-size:13px;
     }
 
-    .mini-emoji {
-      font-size: 20px;
-      margin-bottom: 6px;
+    .usecase-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:4px;
     }
 
-    .mini-bar {
-      height: 6px;
-      border-radius: 999px;
-      background: #e5e7eb;
-      overflow: hidden;
-      position: relative;
+    .usecase-tag{
+      background:#e0f2fe;
+      color:#0369a1;
+      padding:3px 8px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
     }
 
-    .mini-bar-fill {
-      height: 100%;
-      background: var(--scale-gradient);
+    .usecase-name{
+      font-weight:600;
+      color:var(--ls-navy);
+      font-size:14px;
     }
 
-    /* Use case list */
-    .usecase-list {
-      margin-top: 14px;
-      display: grid;
-      gap: 10px;
+    .usecase-body{
+      font-size:13px;
+      color:#475569;
     }
 
-    .usecase-card {
-      background: #f8fafc;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      padding: 10px 12px;
-      font-size: 13px;
+    .bar-preview{
+      margin-top:6px;
+      height:6px;
+      border-radius:999px;
+      background:var(--scale-gradient);
+      position:relative;
     }
 
-    .usecase-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .usecase-tag {
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .usecase-name {
-      font-weight: 600;
-      color: var(--ls-navy);
-      font-size: 14px;
-    }
-
-    .usecase-role {
-      font-size: 11px;
-      color: #64748b;
-    }
-
-    .usecase-body {
-      font-size: 13px;
-      color: #475569;
-      margin-top: 4px;
+    .indicator{
+      position:absolute;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      background:#1e1f33;
+      border:2px solid #fff;
+      box-shadow:0 1px 4px rgba(0,0,0,.25);
     }
 
     /* Demo list */
-    .demo-list {
-      margin-top: 14px;
-      display: grid;
-      gap: 12px;
+    .demo-list{
+      margin-top:14px;
+      display:grid;
+      gap:12px;
     }
 
-    .demo-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
+    .demo-card{
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:12px;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      font-size:13px;
     }
 
-    .demo-title {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      color: var(--ls-navy);
+    .demo-title{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-weight:600;
+      color:var(--ls-navy);
     }
 
-    .demo-tag {
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .demo-tag{
+      background:#e0f2fe;
+      color:#0369a1;
+      padding:3px 8px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
     }
 
-    .demo-desc {
-      color: #475569;
+    .demo-desc{color:#475569;}
+    .demo-meta{font-size:11px;color:#94a3b8;}
+
+    .btn-primary{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:var(--ls-blue);
+      border-radius:999px;
+      padding:7px 14px;
+      font-size:13px;
+      text-decoration:none;
+      color:#fff;
+      margin-top:4px;
     }
 
-    .demo-meta {
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--ls-blue);
-      border-radius: 999px;
-      padding: 7px 14px;
-      font-size: 13px;
-      text-decoration: none;
-      color: #ffffff;
-      margin-top: 4px;
-      transition: background 0.2s;
-    }
-
-    .btn-primary:hover {
-      background: #2d1880;
-    }
-
-    footer {
-      padding: 18px 24px 24px;
-      text-align: center;
-      font-size: 11px;
-      color: #9ca3af;
+    footer{
+      padding:20px;
+      font-size:12px;
+      text-align:center;
+      color:#8a97a7;
     }
   </style>
 </head>
+
 <body class="page">
 
 <header>
   <div class="header-inner">
-    <div class="logo-wrap">
+    <div class="header-text">
       <div class="logo">
         <div class="logo-mark"></div>
-        <span>Lightspark</span>
+        Lightspark
       </div>
-      <div class="tagline">Home Energy & Climate Intelligence Platform</div>
+      <div class="header-tagline">
+        Home Energy &amp; Climate Intelligence for Bank X
+      </div>
     </div>
     <div class="pill">
       <span class="pill-dot"></span>
-      <span>Bank X Demo Index</span>
+      <span>Demo index • Use cases &amp; live views</span>
     </div>
   </div>
 </header>
 
 <main>
-  <section class="layout">
-    <!-- Left column -->
+  <section class="layout" aria-label="Lightspark × Bank X overview">
+    <!-- LEFT COLUMN -->
     <div>
-      <article class="card">
+      <div class="card">
         <div class="section-title">Overview</div>
         <h1>Lightspark × Bank X</h1>
         <p style="margin-top:6px;">
-          Lightspark connects home energy and climate risk intelligence to <strong>Bank X</strong>'s lending,
-          insurance, and climate reporting workflows. The same underlying model powers
-          three distinct user journeys: homeowner, lending advisor, and underwriter.
+          Lightspark connects home energy and climate intelligence into Bank X’s
+          retail, lending, insurance, and reporting workflows. The same scoring
+          model and red→green scale appear in each journey.
         </p>
 
-        <div class="mini-metrics">
+        <div class="mini-metrics" aria-label="High-level example metrics">
           <div class="mini">
-            <div class="mini-emoji">🏘️</div>
             <div class="mini-label">Portfolio coverage</div>
             <div class="mini-value">3M+ homes</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:62%;"></div></div>
           </div>
-          
+
           <div class="mini">
-            <div class="mini-emoji">⚡</div>
             <div class="mini-label">Upgrade adoption</div>
             <div class="mini-value">18–27%</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:48%;"></div></div>
           </div>
-          
+
           <div class="mini">
-            <div class="mini-emoji">🌱</div>
             <div class="mini-label">Carbon reduction</div>
-            <div class="mini-value">−5 tCO₂e</div>
+            <div class="mini-value">−5 tCO₂e / home</div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:45%;"></div></div>
           </div>
         </div>
-      </article>
+      </div>
 
-      <article class="card">
-        <div class="section-title">Use Cases</div>
-        <h2>Key Applications</h2>
+      <div class="card">
+        <div class="section-title">Use cases</div>
 
-        <div class="usecase-list">
-          <article class="usecase-card">
+        <div class="usecase-list" aria-label="Primary use cases">
+          <div class="usecase-card">
             <div class="usecase-header">
-              <span class="usecase-tag">Use Case 1</span>
-              <span class="usecase-role">Retail customer</span>
+              <span class="usecase-tag">Use Case 01</span>
+              <span class="usecase-name">Homeowner engagement</span>
             </div>
-            <div class="usecase-name">Personal Banking</div>
             <div class="usecase-body">
-              Retail customers assess potential energy efficiency upgrades for their home
-              and use a <strong>Bank X</strong> loan or mortgage add-on to execute those upgrades.
-              Lightspark provides the score, carbon, and energy story in plain language.
+              Help homeowners understand their energy use, comfort issues, climate
+              risks and upgrade options, along with example financing pathways.
             </div>
-          </article>
+            <div class="bar-preview">
+              <div class="indicator" style="left:68%;"></div>
+            </div>
+          </div>
 
-          <article class="usecase-card">
+          <div class="usecase-card">
             <div class="usecase-header">
-              <span class="usecase-tag">Use Case 2</span>
-              <span class="usecase-role">Lending advisor</span>
+              <span class="usecase-tag">Use Case 02</span>
+              <span class="usecase-name">Lending &amp; advisory</span>
             </div>
-            <div class="usecase-name">Mortgage Advisory</div>
             <div class="usecase-body">
-              <strong>Bank X</strong> lending specialists review customer Home Energy Scores and risk profiles,
-              then match them with upgrade bundles and lending products. The model
-              surfaces the impact on GDS/TDS ratios and cash flow.
+              Equip advisors with scorecards, upgrade bundles and red→green
+              scales that show how home improvements interact with loan
+              structures and affordability.
             </div>
-          </article>
+            <div class="bar-preview">
+              <div class="indicator" style="left:72%;"></div>
+            </div>
+          </div>
 
-          <article class="usecase-card">
+          <div class="usecase-card">
             <div class="usecase-header">
-              <span class="usecase-tag">Use Case 3</span>
-              <span class="usecase-role">Insurance customer</span>
+              <span class="usecase-tag">Use Case 03</span>
+              <span class="usecase-name">Insurance &amp; resilience</span>
             </div>
-            <div class="usecase-name">Insurance Risk</div>
             <div class="usecase-body">
-              Insurance customers see how resilience upgrades reduce their climate risk scores
-              for fire, flood, wind, and heat. <strong>Bank X</strong> can tie specific measures to discounts or
-              improved policy terms.
+              Provide underwriters and customers with peril scores and
+              resilience bundles that reduce risk from flood, water, wind
+              and heat.
             </div>
-          </article>
-
-          <article class="usecase-card">
-            <div class="usecase-header">
-              <span class="usecase-tag">Use Case 4</span>
-              <span class="usecase-role">Underwriter</span>
+            <div class="bar-preview">
+              <div class="indicator" style="left:55%;"></div>
             </div>
-            <div class="usecase-name">Insurance Underwriting</div>
-            <div class="usecase-body">
-              Underwriters use consistent 1–5 peril scores, exposure maps, and resilience
-              measures to support coverage decisions, deductibles, and climate riders.
-              Data rolls up to portfolio-level views.
-            </div>
-          </article>
-
-          <article class="usecase-card">
-            <div class="usecase-header">
-              <span class="usecase-tag">Use Case 5</span>
-              <span class="usecase-role">Capital markets</span>
-            </div>
-            <div class="usecase-name">Green Bonds</div>
-            <div class="usecase-body">
-              <strong>Bank X</strong> can identify top-performing homes in the mortgage portfolio by energy and
-              resilience performance as a basis for green or sustainability-linked bond issuance.
-            </div>
-          </article>
-
-          <article class="usecase-card">
-            <div class="usecase-header">
-              <span class="usecase-tag">Use Case 6</span>
-              <span class="usecase-role">ESG reporting</span>
-            </div>
-            <div class="usecase-name">Financed Emissions</div>
-            <div class="usecase-body">
-              Estimate the carbon footprint of <strong>Bank X</strong>'s real estate portfolio and track how
-              financed upgrades reduce financed emissions (tCO₂e) over time, supporting
-              climate commitments and disclosure frameworks.
-            </div>
-          </article>
+          </div>
         </div>
-      </article>
+      </div>
     </div>
 
-    <!-- Right column -->
+    <!-- RIGHT COLUMN -->
     <div>
-      <article class="card">
-        <div class="section-title">Live Prototypes</div>
-        <h2>Demo Screens</h2>
-        <p style="font-size:13px;color:#64748b;margin-top:4px;">
-          All three demos use the same Lightspark scoring model and red→green scale,
-          customized for different <strong>Bank X</strong> user types.
+      <div class="card">
+        <div class="section-title">Live demo views</div>
+        <h2>Open each prototype screen</h2>
+        <p style="font-size:13px;margin-top:4px;color:#64748b;">
+          Each screen uses the same Lightspark scoring model and red→green scale,
+          framed for a different Bank X journey.
         </p>
 
-        <div class="demo-list">
-          <article class="demo-card">
+        <div class="demo-list" aria-label="Demo screens">
+          <div class="demo-card">
             <div class="demo-title">
-              <span class="demo-tag">Homeowner</span>
-              <span>Energy Report</span>
+              <span class="demo-tag">Use Case 01</span>
+              <span>Homeowner Energy Report</span>
             </div>
             <div class="demo-desc">
-              Customer-facing report combining home energy score, carbon metrics,
-              upgrade bundles, and <strong>Bank X</strong> loan options. Designed for clarity and action.
+              Customer-facing report combining home energy scores, carbon and
+              energy metrics, upgrade bundles, and example financing options.
             </div>
             <div class="demo-meta">
-              Retail customer journey • Plain language interface
+              Homeowner journey • Clear, action-oriented view.
             </div>
-            <!-- UPDATED LINK -->
             <a class="btn-primary" href="homeowner_report.html">
-              <span>→</span>
-              Open Homeowner Report
+              <span aria-hidden="true">➡️</span>
+              Open Homeowner Energy Report
             </a>
-          </article>
+          </div>
 
-          <article class="demo-card">
+          <div class="demo-card">
             <div class="demo-title">
-              <span class="demo-tag">Advisor</span>
-              <span>Lending Dashboard</span>
+              <span class="demo-tag">Use Case 02</span>
+              <span>Lending Advisor Dashboard</span>
             </div>
             <div class="demo-desc">
-              Advisor view showing Lightspark data plus GDS/TDS impact, upgrade costs,
-              and monthly cash flow effects. Aligns energy upgrades with lending risk.
+              Internal view for advisors showing the same Lightspark data plus
+              affordability, cash flow and upgrade bundle structures.
             </div>
             <div class="demo-meta">
-              Internal <strong>Bank X</strong> journey • Decision support tool
+              Advisor journey • Links upgrades to lending decisions.
             </div>
-            <!-- UPDATED LINK -->
             <a class="btn-primary" href="mortgage-dashboard.html">
-              <span>→</span>
-              Open Lending Dashboard
+              <span aria-hidden="true">➡️</span>
+              Open Lending Advisor Dashboard
             </a>
-          </article>
+          </div>
 
-          <article class="demo-card">
+          <div class="demo-card">
             <div class="demo-title">
-              <span class="demo-tag">Underwriter</span>
-              <span>Insurance Portal</span>
+              <span class="demo-tag">Use Case 03</span>
+              <span>Insurance Risk Portal</span>
             </div>
             <div class="demo-desc">
-              Underwriting view with climate risk scores (1–5) for fire, flood, wind, and heat,
-              plus a resilience catalog tied to potential score improvements.
+              Underwriting view with climate risk scores (1–5), peril breakdowns
+              and resilience bundles, all aligned to the same red→green scale.
             </div>
             <div class="demo-meta">
-              Insurance journey • Peril scoring & mitigation
+              Insurance journey • Peril scores and mitigation on one page.
             </div>
-            <!-- UPDATED LINK -->
             <a class="btn-primary" href="insurance-portal.html">
-              <span>→</span>
-              Open Insurance Portal
+              <span aria-hidden="true">➡️</span>
+              Open Insurance Risk Portal
             </a>
-          </article>
+          </div>
         </div>
-      </article>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
-  Lightspark × Bank X • Demo prototypes • For discussion only
+  Lightspark × Bank X • Internal prototype index • Not for external distribution.
 </footer>
 
 </body>

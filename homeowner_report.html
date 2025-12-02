@@ -1,705 +1,985 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lightspark – Homeowner Energy Report</title>
+  <title>Lightspark – Home Energy Report</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      /* Core Lightspark colours */
-      --ls-blue:#3d20ae;
-      --ls-green:#3bf49c;
-      --ls-red:#d65c5c;
-      --ls-yellow:#ffd645;
+      --ls-blue: #3d20ae;
+      --ls-green: #3bf49c;
+      --ls-red: #ff5a5f;
+      --ls-yellow: #ffd645;
+      --ls-navy: #1e1f33;
+      --ls-slate: #4a5568;
+      --ls-soft-grey: #f5f7fa;
+      --ls-border: #e2e8f0;
+      --radius-card: 12px;
+      --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
 
-      --ls-navy:#1e1f33;
-      --ls-slate:#4a5568;
-      --ls-soft-grey:#f5f7fa;
-      --ls-border:#e2e8f0;
-
-      --radius-card:14px;
-      --shadow-card:0 10px 25px rgba(15,23,42,0.08);
-
-      /* LEFT = RED → RIGHT = GREEN scale */
-      --scale-gradient:linear-gradient(
+      /* Rainbow gradient used for ALL scales/bars */
+      --rainbow-gradient: linear-gradient(
         90deg,
-        var(--ls-red) 0%,
-        var(--ls-yellow) 50%,
-        var(--ls-green) 100%
+        #2563eb,  /* blue   */
+        #22c55e,  /* green  */
+        #eab308,  /* yellow */
+        #f97316,  /* orange */
+        #ef4444   /* red    */
       );
     }
 
-    *{box-sizing:border-box;}
-
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Inter,sans-serif;
-      background:var(--ls-soft-grey);
-      color:var(--ls-slate);
+    * {
+      box-sizing: border-box;
     }
 
-    .page{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      background: var(--ls-soft-grey);
+      color: var(--ls-slate);
     }
 
-    /* HEADER */
-    header{
-      background:#ffffff;
-      border-bottom:1px solid var(--ls-border);
-      position:sticky;
-      top:0;
-      z-index:10;
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .header-inner{
-      max-width:1180px;
-      margin:0 auto;
-      padding:14px 24px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--ls-border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .logo-wrap{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-weight:700;
-      font-size:20px;
-      color:var(--ls-blue);
-      letter-spacing:0.02em;
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--ls-blue);
+      letter-spacing: 0.02em;
     }
 
-    .logo-mark{
-      width:26px;
-      height:26px;
-      border-radius:999px;
-      background:radial-gradient(circle at 30% 20%, var(--ls-green), var(--ls-blue));
-      position:relative;
-      overflow:hidden;
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, var(--ls-green), var(--ls-blue));
+      position: relative;
+      overflow: hidden;
     }
 
-    .logo-mark::after{
-      content:"";
-      position:absolute;
-      inset:30% 24% auto;
-      height:2px;
-      border-radius:999px;
-      background:rgba(255,255,255,0.9);
-      box-shadow:0 0 8px rgba(255,255,255,0.9);
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      inset: 28% 24% auto;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
 
-    .tagline{
-      font-size:12px;
-      color:#64748b;
+    .tagline {
+      font-size: 13px;
+      color: #64748b;
     }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      background:rgba(61,32,174,0.05);
-      color:var(--ls-blue);
-      border:1px solid rgba(61,32,174,0.18);
+    main {
+      flex: 1;
     }
 
-    .pill-dot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background:var(--ls-green);
+    .layout {
+      max-width: 1200px;
+      margin: 24px auto 40px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.4fr);
+      gap: 24px;
     }
 
-    main{
-      flex:1;
-    }
-
-    .layout{
-      max-width:1180px;
-      margin:20px auto 48px;
-      padding:0 24px;
-      display:grid;
-      grid-template-columns:1.6fr 1.4fr;
-      gap:22px;
-    }
-
-    @media(max-width:960px){
-      .layout{grid-template-columns:1fr;}
-    }
-
-    h1,h2,h3{
-      margin:0;
-      color:var(--ls-navy);
-      font-weight:600;
-    }
-
-    h1{font-size:24px;letter-spacing:0.01em;}
-    h2{font-size:18px;}
-    h3{font-size:16px;}
-
-    p{
-      margin:0;
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .section-title{
-      font-size:12px;
-      letter-spacing:0.14em;
-      text-transform:uppercase;
-      color:#94a3b8;
-      margin-bottom:4px;
-    }
-
-    .card{
-      background:#ffffff;
-      border-radius:var(--radius-card);
-      border:1px solid rgba(148,163,184,0.18);
-      box-shadow:var(--shadow-card);
-      padding:20px 20px 18px;
-    }
-
-    .card + .card{
-      margin-top:16px;
-    }
-
-    /* Property header */
-    .crumbs{
-      font-size:11px;
-      color:#9ca3af;
-      margin-bottom:6px;
-    }
-
-    .property-header{
-      display:grid;
-      grid-template-columns:200px minmax(0,1fr);
-      gap:16px;
-      align-items:flex-start;
-    }
-
-    @media(max-width:720px){
-      .property-header{
-        grid-template-columns:1fr;
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    .property-photo{
-      width:100%;
-      height:140px;
-      border-radius:14px;
-      overflow:hidden;
-      background:#e5e7eb;
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: 600;
+      color: var(--ls-navy);
     }
 
-    .property-photo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+    h1 {
+      font-size: 28px;
+      letter-spacing: 0.01em;
     }
 
-    .property-meta-top{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
+    h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
     }
 
-    .meta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
+    h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
     }
 
-    .chip{
-      padding:4px 9px;
-      border-radius:999px;
-      background:#f3f4f6;
-      font-size:11px;
-      color:#4b5563;
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    .fair-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#fef9c3;
-      font-size:12px;
-      color:#92400e;
-      margin-top:10px;
-      font-weight:600;
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
     }
 
-    .fair-pill span{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:3px 8px;
-      border-radius:999px;
-      background:var(--ls-yellow);
-      color:#111827;
-      font-size:11px;
-      font-weight:700;
+    .card + .card {
+      margin-top: 16px;
     }
 
-    .fair-copy{
-      margin-top:8px;
-      font-size:13px;
-      color:#4b5563;
+    .section-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+      margin-bottom: 4px;
     }
 
-    /* BAR + INDICATOR */
-    .bar{
-      width:100%;
-      height:6px;
-      border-radius:999px;
-      background:var(--scale-gradient);
-      position:relative;
-      margin:6px 0 4px;
+    .subtle-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
     }
 
-    .indicator{
-      position:absolute;
-      top:50%;
-      transform:translate(-50%,-50%);
-      width:12px;
-      height:12px;
-      border-radius:999px;
-      background:#1e1f33;
-      border:2px solid #ffffff;
-      box-shadow:0 1px 4px rgba(0,0,0,0.3);
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(61, 32, 174, 0.05);
+      color: var(--ls-blue);
+      border: 1px solid rgba(61, 32, 174, 0.18);
     }
 
-    .metric-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-      margin-bottom:10px;
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--ls-green);
     }
 
-    .metric-label{
-      font-size:12px;
-      color:#6b7280;
+    /* Property header */
+    .property-header {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 16px;
+      align-items: stretch;
     }
 
-    .metric-primary{
-      font-size:18px;
-      font-weight:700;
-      color:#111827;
+    @media (max-width: 700px) {
+      .property-header {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
-    .metric-secondary{
-      font-size:12px;
-      color:#6b7280;
-      text-align:right;
+    .property-photo {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #cbd5e1;
+      min-height: 180px;
+      position: relative;
     }
 
-    .score-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:10px;
+    .property-photo::before {
+      content: "1234 Main Street";
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #e2e8f0;
+      font-size: 12px;
     }
 
-    @media(max-width:720px){
-      .score-grid{grid-template-columns:1fr;}
+    .property-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #64748b, #0f172a);
+      opacity: 0.85;
     }
 
-    .score-card{
-      background:#f9fafb;
-      border-radius:10px;
-      border:1px solid #e5e7eb;
-      padding:8px 9px;
-      font-size:12px;
+    .property-meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
     }
 
-    .score-title{
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      color:#9ca3af;
-      margin-bottom:2px;
+    .property-meta-top > h1 {
+      margin-bottom: 4px;
     }
 
-    .score-main{
-      font-size:15px;
-      font-weight:600;
-      color:#111827;
+    .property-address {
+      font-size: 14px;
+      color: #64748b;
     }
 
-    .score-sub{
-      font-size:11px;
-      color:#6b7280;
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      font-size: 12px;
     }
 
-    /* Costs */
-    .big-number{
-      font-size:22px;
-      font-weight:700;
-      color:#111827;
+    @media (max-width: 520px) {
+      .property-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
-    .big-number.red{color:var(--ls-red);}
-    .big-number.green{color:#15803d;}
-
-    /* Property details table */
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:13px;
-      margin-top:6px;
+    .property-grid-item {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #f8fafc;
     }
 
-    th,td{
-      padding:7px 0;
-      border-bottom:1px solid #e5e7eb;
+    .property-grid-item span {
+      display: block;
     }
 
-    th{
-      text-align:left;
-      width:40%;
-      color:#6b7280;
-      font-weight:500;
-      font-size:12px;
+    .property-grid-label {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
     }
 
-    td{
-      color:#111827;
+    .property-grid-value {
+      font-weight: 500;
+      color: var(--ls-navy);
     }
 
-    /* Climate + bundles */
-    .bundle{
-      border-radius:12px;
-      border:1px solid #e5e7eb;
-      background:#f9fafb;
-      padding:10px 11px;
-      margin-top:8px;
-      font-size:12px;
+    /* Scores */
+    .scores-card {
+      margin-top: 16px;
     }
 
-    .bundle-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:8px;
-      margin-bottom:4px;
+    .scores-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .bundle-name{
-      font-weight:600;
-      color:#111827;
-      font-size:13px;
+    .scores-header h2 {
+      margin-bottom: 0;
     }
 
-    .bundle-cost{
-      font-weight:700;
-      color:#111827;
-      font-size:14px;
+    .score-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
     }
 
-    .bundle-tag{
-      display:inline-block;
-      margin-top:3px;
-      padding:2px 8px;
-      border-radius:999px;
-      background:#e0f2fe;
-      color:#0369a1;
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:0.08em;
+    .score-item {
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      display: grid;
+      grid-template-columns: minmax(0, 2.7fr) auto;
+      column-gap: 12px;
+      row-gap: 4px;
+      align-items: center;
     }
 
-    .bundle ul{
-      margin:4px 0 0 18px;
-      padding:0;
-      color:#4b5563;
+    .score-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ls-navy);
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
     }
 
-    .bundle li{
-      margin-bottom:2px;
+    .score-title-icon {
+      font-size: 14px;
     }
 
-    .climate-item{
-      margin-bottom:10px;
-      font-size:12px;
+    .score-value {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: right;
+      white-space: nowrap;
+      color: var(--ls-navy);
     }
 
-    .climate-score{
-      font-size:14px;
-      font-weight:600;
-      color:#111827;
-      margin-bottom:2px;
+    .score-meter {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .climate-text{
-      font-size:12px;
-      color:#6b7280;
+    /* Shared rainbow bar style – used for ALL scales */
+    .metric-bar {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+      position: relative;
     }
 
-    footer{
-      padding:18px 24px 24px;
-      text-align:center;
-      font-size:11px;
-      color:#9ca3af;
+    .metric-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--rainbow-gradient);
+      transform-origin: left;
+    }
+
+    .metric-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .metric-label-row strong {
+      color: #0f172a;
+    }
+
+    .metric-delta-text {
+      font-size: 12px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .metric-delta-strong {
+      font-weight: 600;
+      color: #16a34a;
+    }
+
+    /* KPI row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .kpi-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .kpi-card {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ls-navy);
+    }
+
+    .kpi-footnote {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* Risk summary */
+    .risk-list {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .risk-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .risk-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .risk-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: #e0f2fe;
+    }
+
+    .risk-label {
+      font-weight: 500;
+    }
+
+    .risk-level {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f1f5f9;
+    }
+
+    .risk-level--low {
+      background: rgba(34, 197, 94, 0.12);
+      color: #15803d;
+    }
+
+    .risk-level--moderate {
+      background: rgba(250, 204, 21, 0.18);
+      color: #92400e;
+    }
+
+    .risk-level--high {
+      background: rgba(248, 113, 113, 0.16);
+      color: #b91c1c;
+    }
+
+    .risk-footnote {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* Buttons & bundles */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 7px 14px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      line-height: 1.1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: var(--ls-blue);
+    }
+
+    .btn-primary {
+      background: var(--ls-blue);
+      color: #ffffff;
+      border-color: var(--ls-blue);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border-color: #e2e8f0;
+    }
+
+    .btn span[aria-hidden="true"] {
+      font-size: 14px;
+    }
+
+    .bundle-strip {
+      overflow: hidden;
+    }
+
+    .bundle-strip-inner {
+      display: flex;
+      gap: 14px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px 12px 12px;
+      border: 1px solid #e2e8f0;
+      min-width: 150px;
+      max-width: 190px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .product-card img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .product-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--ls-navy);
+    }
+
+    .product-price {
+      font-weight: 600;
+      color: #059669;
+      margin-top: 4px;
+    }
+
+    .product-info-icon {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-left: 4px;
+    }
+
+    .bundle-summary {
+      margin-top: 16px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .bundle-summary strong {
+      color: var(--ls-navy);
+    }
+
+    .bundle-summary span.bundle-score {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    /* Financing */
+    .loan-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .loan-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .loan-card {
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .loan-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .loan-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ls-navy);
+    }
+
+    .loan-sub {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .loan-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      margin-top: 4px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .loan-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .loan-cta {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+
+    footer {
+      padding: 16px 24px 24px;
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
     }
   </style>
 </head>
 <body class="page">
-
 <header>
   <div class="header-inner">
-    <div class="logo-wrap">
-      <div class="logo">
+    <div>
+      <div class="logo" aria-label="Lightspark">
         <div class="logo-mark" aria-hidden="true"></div>
         <span>Lightspark</span>
       </div>
-      <div class="tagline">Home Energy &amp; Climate Intelligence</div>
+      <div class="tagline">Home Energy Intelligence Report</div>
     </div>
     <div class="pill">
-      <span class="pill-dot"></span>
-      <span>Homeowner Energy Report • Demo</span>
+      <span class="pill-dot" aria-hidden="true"></span>
+      <span>Estimated report — demo data</span>
     </div>
   </div>
 </header>
 
 <main>
-  <section class="layout" aria-label="Homeowner energy report layout">
-    <!-- LEFT COLUMN -->
-    <div>
+  <section class="layout" aria-label="Home energy report">
+    <!-- LEFT COLUMN: Property + scores + KPIs + risk -->
+    <div aria-label="Home overview">
       <article class="card">
-        <div class="crumbs">BC / Vancouver / Listing</div>
-        <div class="section-title">Property overview</div>
-
+        <div class="section-title">Homeowner Energy Report</div>
         <div class="property-header">
-          <div class="property-photo">
-            <img src="https://hips.hearstapps.com/hmg-prod/images/dutch-colonial-house-style-66956274903da.jpg"
-                 alt="Exterior of 1234 Main Street, Vancouver" />
-          </div>
+<div class="property-photo">
+  <img 
+    src="your-house.png" 
+    alt="1234 Main Street" 
+    style="
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    "
+  />
+</div>
 
-          <div>
+          <div class="property-meta">
             <div class="property-meta-top">
               <h1>1234 Main Street</h1>
-              <p style="font-size:13px;color:#6b7280;">
-                Vancouver, BC • Detached home • 2 storeys + basement
-              </p>
+              <div class="property-address">Vancouver, BC • Grandview-Woodland</div>
+            </div>
+            <div class="property-grid" aria-label="Property details">
+              <div class="property-grid-item">
+                <span class="property-grid-label">Vintage</span>
+                <span class="property-grid-value">1927</span>
+              </div>
+              <div class="property-grid-item">
+                <span class="property-grid-label">Area</span>
+                <span class="property-grid-value">3,200 sq ft / 1,000 sq ft lot</span>
+              </div>
+              <div class="property-grid-item">
+                <span class="property-grid-label">Windows</span>
+                <span class="property-grid-value">Original single-pane</span>
+              </div>
+              <div class="property-grid-item">
+                <span class="property-grid-label">Heating</span>
+                <span class="property-grid-value">Gas furnace</span>
+              </div>
+              <div class="property-grid-item">
+                <span class="property-grid-label">Cooling</span>
+                <span class="property-grid-value">None</span>
+              </div>
+              <div class="property-grid-item">
+                <span class="property-grid-label">Hot water</span>
+                <span class="property-grid-value">Gas tank</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scores-card" aria-label="Current home scores">
+          <div class="scores-header">
+            <h2>Current Home Energy Scores</h2>
+            <span class="subtle-label">Score, carbon (tCO₂e) and energy (GJ) today and after upgrades.</span>
+          </div>
+
+          <div class="score-list">
+            <!-- Lightspark Score with rainbow bar -->
+            <div class="score-item">
+              <div class="score-title">
+                <span class="score-title-icon">✨</span> Lightspark Score
+              </div>
+              <div class="score-value">75 / 100</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <div class="metric-fill" style="width: 75%;"></div>
+                </div>
+                <div class="metric-label-row">
+                  <span>Current: <strong>Good</strong></span>
+                  <span>Potential after upgrades: <strong>89</strong></span>
+                </div>
+              </div>
             </div>
 
-            <div class="meta-row">
-              <span class="chip">Built: 1918</span>
-              <span class="chip">Approx. area: 200 m² / 400 sq ft</span>
-              <span class="chip">Primary heating: Gas furnace</span>
+            <!-- Carbon with rainbow bar (visual only) -->
+            <div class="score-item">
+              <div class="score-title">
+                <span class="score-title-icon">🌫️</span> Carbon emissions
+              </div>
+              <div class="score-value">12 tCO₂e / yr</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <!-- internal mapping of 12 t to ~55% fill -->
+                  <div class="metric-fill" style="width: 55%;"></div>
+                </div>
+                <div class="metric-delta-text">
+                  <span>Typical for similar older homes in this area.</span>
+                  <span>After recommended upgrades:
+                    <span class="metric-delta-strong">7 tCO₂e / yr (−5)</span>
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div class="fair-pill">
-              <span>72 / 100</span>
-              Overall home score: FAIR
+            <!-- Energy with rainbow bar (visual only) -->
+            <div class="score-item">
+              <div class="score-title">
+                <span class="score-title-icon">⚡</span> Energy use
+              </div>
+              <div class="score-value">232 GJ / yr</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <!-- 232 GJ mapped internally to ~66% fill -->
+                  <div class="metric-fill" style="width: 66%;"></div>
+                </div>
+                <div class="metric-delta-text">
+                  <span>Higher than average energy use today.</span>
+                  <span>After upgrades:
+                    <span class="metric-delta-strong">165 GJ / yr (−67)</span>
+                  </span>
+                </div>
+              </div>
             </div>
-
-            <p class="fair-copy">
-              This older Vancouver home has higher-than-average energy use and moderate climate risk,
-              but strong upgrade potential. Your score blends Lightspark, Energy, and Carbon indicators
-              on a single red→green scale so you can see where upgrades matter most.
-            </p>
           </div>
         </div>
       </article>
 
-      <article class="card">
-        <div class="section-title">Home details</div>
-        <h2>How your home uses energy today</h2>
+      <!-- KPIs + Risk -->
+      <article class="card" aria-label="Costs and risk">
+        <div class="section-title">Costs &amp; Risk</div>
 
-        <table aria-label="Key home details">
-          <tr>
-            <th>Heating system</th>
-            <td>Gas forced-air furnace</td>
-          </tr>
-          <tr>
-            <th>Cooling</th>
-            <td>No central cooling</td>
-          </tr>
-          <tr>
-            <th>Hot water</th>
-            <td>Gas storage tank</td>
-          </tr>
-          <tr>
-            <th>Windows</th>
-            <td>Mixed single / double pane</td>
-          </tr>
-          <tr>
-            <th>Attic insulation</th>
-            <td>Below recommended level</td>
-          </tr>
-        </table>
-
-        <p style="margin-top:8px;font-size:12px;color:#6b7280;">
-          These details help Lightspark estimate how much energy your home uses now and
-          how much you could save with upgrades.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="section-title">Climate resilience</div>
-        <h2>How your home handles future weather</h2>
-
-        <div class="climate-item">
-          <div class="climate-score">Fire risk – 3 / 5</div>
-          <div class="bar">
-            <div class="indicator" style="left:60%;"></div>
+        <div class="kpi-row" aria-label="Key performance indicators">
+          <div class="kpi-card">
+            <div class="kpi-label">10-year energy costs</div>
+            <div class="kpi-value">$60,000</div>
+            <div class="kpi-footnote">If you make no changes.</div>
           </div>
-          <div class="climate-text">
-            Moderate wildfire exposure. Improving defensible space and roof resilience can
-            move this closer to the green side of the scale.
+          <div class="kpi-card">
+            <div class="kpi-label">Potential savings</div>
+            <div class="kpi-value">$8,600</div>
+            <div class="kpi-footnote">Estimated over 10 years with recommended upgrades.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Estimated monthly payment</div>
+            <div class="kpi-value">$1,250</div>
+            <div class="kpi-footnote">Principal &amp; interest if upgrades are financed.</div>
           </div>
         </div>
 
-        <div class="climate-item">
-          <div class="climate-score">Flood risk – 2 / 5</div>
-          <div class="bar">
-            <div class="indicator" style="left:40%;"></div>
+        <div style="margin-top: 18px;">
+          <h2>Property Risk Summary</h2>
+          <p>This home is older and located near the Grandview-Woodland floodplain. Upgrades can reduce both energy costs and long-term risk.</p>
+
+          <div class="risk-list" aria-label="Risk factors">
+            <div class="risk-item">
+              <div class="risk-left">
+                <div class="risk-icon" aria-hidden="true">🌊</div>
+                <div class="risk-label">Flood zone</div>
+              </div>
+              <div class="risk-level risk-level--moderate">Moderate</div>
+            </div>
+            <div class="risk-item">
+              <div class="risk-left">
+                <div class="risk-icon" aria-hidden="true">🔥</div>
+                <div class="risk-label">Wildfire risk</div>
+              </div>
+              <div class="risk-level risk-level--low">Low</div>
+            </div>
+            <div class="risk-item">
+              <div class="risk-left">
+                <div class="risk-icon" aria-hidden="true">🏚️</div>
+                <div class="risk-label">Building age</div>
+              </div>
+              <div class="risk-level risk-level--high">High (1927)</div>
+            </div>
           </div>
-          <div class="climate-text">
-            Some surface water risk during heavy rain. Drainage and grading improvements
-            help reduce the chance of water entering the basement.
+
+          <div class="risk-footnote">
+            Based on municipal hazard data and your home’s age. This property qualifies for climate-resilient upgrade financing.
           </div>
         </div>
       </article>
     </div>
 
-    <!-- RIGHT COLUMN -->
-    <div>
+    <!-- RIGHT COLUMN: Bundles + Financing -->
+    <div aria-label="Upgrade recommendations">
+      <!-- Bundles / marketplace strip -->
       <article class="card">
-        <div class="section-title">Your energy scores</div>
-        <h2>How your home scores today vs after upgrades</h2>
+        <div class="section-header">
+          <div>
+            <div class="section-title">Bundle A</div>
+            <h2>Recommendations personalized for you</h2>
+            <p style="font-size:13px; margin-top:4px;">
+              Three upgrades that work together to improve comfort, cut costs, and reduce carbon.
+            </p>
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-primary" type="button">
+              <span aria-hidden="true">➕</span>
+              Add bundle to my plan
+            </button>
+          </div>
+        </div>
 
-        <div class="score-grid" aria-label="Key energy and carbon scores">
-          <div class="score-card">
-            <div class="score-title">Lightspark score</div>
-            <div class="score-main">75 / 100</div>
-            <div class="bar">
-              <div class="indicator" style="left:75%;"></div>
+        <div class="bundle-strip" aria-label="Recommended upgrade products">
+          <div class="bundle-strip-inner">
+            <div class="product-card">
+              <img src="insu.png" alt="R40 ceiling insulation" />
+              <div class="product-name">
+                R40 Ceiling Insulation
+                <span class="product-info-icon" aria-hidden="true">ⓘ</span>
+              </div>
+              <p>Helps keep your home warmer in winter and cooler in summer.</p>
+              <div class="product-price">$1,901.95</div>
             </div>
-            <div class="score-sub">
-              Could reach <strong>90 / 100</strong> with recommended upgrades.
+
+            <div class="product-card">
+              <img src="window.png" alt="Triple pane window section" />
+              <div class="product-name">
+                Triple Pane Windows
+                <span class="product-info-icon" aria-hidden="true">ⓘ</span>
+              </div>
+              <p>Replaces drafty single-pane windows on main living areas.</p>
+              <div class="product-price">$1,901.95</div>
+            </div>
+
+            <div class="product-card">
+              <img src="heat_pump-1.png" alt="High efficiency heat pump units" />
+              <div class="product-name">
+                High Efficiency Heat Pump
+                <span class="product-info-icon" aria-hidden="true">ⓘ</span>
+              </div>
+              <p>Provides efficient heating and cooling while reducing gas use.</p>
+              <div class="product-price">$1,901.95</div>
             </div>
           </div>
+        </div>
 
-          <div class="score-card">
-            <div class="score-title">Energy use</div>
-            <div class="score-main">232 GJ / year</div>
-            <div class="bar">
-              <div class="indicator" style="left:70%;"></div>
-            </div>
-            <div class="score-sub">
-              Target: <strong>190 GJ / year</strong> after upgrades.
-            </div>
-          </div>
-
-          <div class="score-card">
-            <div class="score-title">Carbon emissions</div>
-            <div class="score-main">12 tCO₂e / year</div>
-            <div class="bar">
-              <div class="indicator" style="left:80%;"></div>
-            </div>
-            <div class="score-sub">
-              Target: <strong>8 tCO₂e / year</strong> after upgrades.
-            </div>
-          </div>
+        <div class="bundle-summary">
+          <span>
+            <strong>Estimated bundle cost:</strong> $25,500<br />
+            <span style="font-size:12px; color:#64748b;">Includes equipment and typical installation ranges.</span>
+          </span>
+          <span class="bundle-score">
+            +14 Lightspark Score • −5 tCO₂e • −67 GJ / yr
+          </span>
         </div>
       </article>
 
-      <article class="card">
-        <div class="section-title">Energy costs & savings</div>
-        <h2>What you spend today vs after upgrades</h2>
-
-        <div style="margin-top:6px;">
-          <div class="metric-label">Estimated annual energy spend</div>
-          <div class="big-number" style="margin-top:2px;">$6,000 / year</div>
-          <p style="font-size:12px;color:#6b7280;">
-            Electricity: $3,000 • Natural gas: $3,000
-          </p>
-        </div>
-
-        <div style="margin-top:14px;">
-          <div class="metric-label">10-year cost if nothing changes</div>
-          <div class="big-number red" style="margin-top:2px;">$60,000</div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <div class="metric-label">10-year cost with recommended upgrades</div>
-          <div class="big-number" style="margin-top:2px;">$51,400</div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <div class="metric-label">10-year savings</div>
-          <div class="big-number green" style="margin-top:2px;">$8,600</div>
-          <p style="font-size:12px;color:#6b7280;">
-            Roughly <strong>$70/month</strong> back in your pocket, plus a more comfortable,
-            climate-ready home.
-          </p>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="section-title">Upgrade bundles</div>
-        <h2>Three ways to improve comfort and move toward green</h2>
-
-        <div class="bundle">
-          <div class="bundle-header">
-            <div>
-              <div class="bundle-name">Bundle A – Comfort starter</div>
-              <div class="bundle-tag">Entry retrofit</div>
-            </div>
-            <div class="bundle-cost">$21,000</div>
+      <!-- Financing -->
+      <article class="card" style="margin-top: 16px;">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Financing Options</div>
+            <h2>Home energy loan offers</h2>
           </div>
-          <ul>
-            <li>Air sealing &amp; attic insulation upgrades</li>
-            <li>Smart thermostat and basic draft sealing</li>
-          </ul>
         </div>
 
-        <div class="bundle">
-          <div class="bundle-header">
-            <div>
-              <div class="bundle-name">Bundle B – Whole-home upgrade</div>
-              <div class="bundle-tag">Recommended</div>
+        <div class="loan-grid" aria-label="Financing offers">
+          <article class="loan-card">
+            <div class="loan-name">Bundle A – 15-year term</div>
+            <div class="loan-main">$1,250 / month</div>
+            <div class="loan-sub">Estimated principal &amp; interest for $53,000 upgrade package.</div>
+            <div class="loan-meta">
+              <span>Loan amount: $53,000</span>
+              <span>Structure: Mortgage add-on</span>
+              <span>Rate example: 4.2% APR</span>
             </div>
-            <div class="bundle-cost">$32,000</div>
-          </div>
-          <ul>
-            <li>Ductless heat pump for main living areas</li>
-            <li>Attic and wall insulation improvements</li>
-            <li>Targeted air sealing at key leak points</li>
-          </ul>
-        </div>
+            <div class="loan-footer">
+              <button class="btn btn-primary loan-cta" type="button">
+                Send to my bank advisor
+              </button>
+              <span class="kpi-footnote">*Subject to lender approval.</span>
+            </div>
+          </article>
 
-        <div class="bundle">
-          <div class="bundle-header">
-            <div>
-              <div class="bundle-name">Bundle C – Deep retrofit package</div>
-              <div class="bundle-tag">Deep retrofit</div>
+          <article class="loan-card">
+            <div class="loan-name">Insulation only – 10-year term</div>
+            <div class="loan-main">$480 / month</div>
+            <div class="loan-sub">Focus on comfort &amp; draft reduction with lower upfront cost.</div>
+            <div class="loan-meta">
+              <span>Loan amount: $18,000</span>
+              <span>Structure: HELOC example</span>
+              <span>Rate example: 3.9% APR</span>
             </div>
-            <div class="bundle-cost">$58,000</div>
-          </div>
-          <ul>
-            <li>High-efficiency heat pump and hot water system</li>
-            <li>High-performance windows and advanced insulation</li>
-            <li>Maximizes movement toward the green end of the scale</li>
-          </ul>
+            <div class="loan-footer">
+              <button class="btn btn-outline loan-cta" type="button">
+                Compare with other offers
+              </button>
+              <span class="kpi-footnote">Rebates applied after completion.</span>
+            </div>
+          </article>
         </div>
       </article>
     </div>
@@ -707,8 +987,7 @@
 </main>
 
 <footer>
-  Lightspark Homeowner Energy Report • Illustrative demo only • Not financial or renovation advice.
+  Lightspark Home Energy Report • Mock data for 1234 Main Street • Not financial advice.
 </footer>
-
 </body>
 </html>
