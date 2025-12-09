@@ -21,7 +21,7 @@
       --radius-card:14px;
       --shadow-card:0 10px 25px rgba(15,23,42,0.08);
 
-      /* LEFT = RED → RIGHT = GREEN scale */
+      /* Shared band gradient */
       --scale-gradient:linear-gradient(
         90deg,
         var(--ls-red) 0%,
@@ -39,7 +39,6 @@
       color:var(--ls-slate);
     }
 
-    /* Layout Container */
     .page{
       min-height:100vh;
       display:flex;
@@ -80,6 +79,7 @@
       border-radius:999px;
       background:radial-gradient(circle at 30% 20%, var(--ls-green), var(--ls-blue));
       position:relative;
+      overflow:hidden;
     }
 
     .logo-mark::after{
@@ -122,7 +122,6 @@
       background:var(--ls-green);
     }
 
-    /* Main Layout */
     main{flex:1;}
 
     .layout{
@@ -133,12 +132,24 @@
       grid-template-columns:1.7fr 1.3fr;
       gap:24px;
     }
+
     @media(max-width:900px){
       .layout{grid-template-columns:1fr;}
     }
 
-    h1{margin:0;font-size:26px;font-weight:700;color:var(--ls-navy);}
-    h2{margin:0;font-size:20px;font-weight:600;color:var(--ls-navy);}
+    h1{
+      margin:0;
+      font-size:26px;
+      font-weight:700;
+      color:var(--ls-navy);
+    }
+
+    h2{
+      margin:0;
+      font-size:20px;
+      font-weight:600;
+      color:var(--ls-navy);
+    }
 
     p{
       margin:0;
@@ -172,6 +183,7 @@
       gap:12px;
       grid-template-columns:repeat(3,1fr);
     }
+
     @media(max-width:500px){
       .mini-metrics{grid-template-columns:1fr;}
     }
@@ -209,7 +221,7 @@
       background:var(--scale-gradient);
     }
 
-    /* Simple use case list */
+    /* Use cases */
     .usecase-list{
       margin-top:14px;
       display:grid;
@@ -311,8 +323,14 @@
       letter-spacing:0.08em;
     }
 
-    .demo-desc{color:#475569;}
-    .demo-meta{font-size:11px;color:#94a3b8;}
+    .demo-desc{
+      color:#475569;
+    }
+
+    .demo-meta{
+      font-size:11px;
+      color:#94a3b8;
+    }
 
     .btn-primary{
       display:inline-flex;
@@ -325,6 +343,10 @@
       text-decoration:none;
       color:#fff;
       margin-top:4px;
+    }
+
+    .btn-primary span[aria-hidden="true"]{
+      font-size:14px;
     }
 
     footer{
@@ -365,27 +387,32 @@
         <h1>Lightspark × Bank X</h1>
         <p style="margin-top:6px;">
           Lightspark connects home energy and climate intelligence into Bank X’s
-          retail, lending, insurance, and reporting workflows. The same scoring
-          model and red→green scale appear in each journey.
+          retail, lending, insurance and reporting workflows.
         </p>
 
         <div class="mini-metrics" aria-label="High-level example metrics">
           <div class="mini">
             <div class="mini-label">Portfolio coverage</div>
             <div class="mini-value">3M+ homes</div>
-            <div class="mini-bar"><div class="mini-bar-fill" style="width:62%;"></div></div>
+            <div class="mini-bar">
+              <div class="mini-bar-fill" style="width:62%;"></div>
+            </div>
           </div>
 
           <div class="mini">
             <div class="mini-label">Upgrade adoption</div>
             <div class="mini-value">18–27%</div>
-            <div class="mini-bar"><div class="mini-bar-fill" style="width:48%;"></div></div>
+            <div class="mini-bar">
+              <div class="mini-bar-fill" style="width:48%;"></div>
+            </div>
           </div>
 
           <div class="mini">
             <div class="mini-label">Carbon reduction</div>
             <div class="mini-value">−5 tCO₂e / home</div>
-            <div class="mini-bar"><div class="mini-bar-fill" style="width:45%;"></div></div>
+            <div class="mini-bar">
+              <div class="mini-bar-fill" style="width:45%;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -400,10 +427,10 @@
               <span class="usecase-name">Homeowner engagement</span>
             </div>
             <div class="usecase-body">
-              Help homeowners understand their energy use, comfort issues, climate
-              risks and upgrade options, along with example financing pathways.
+              Help homeowners understand their energy use, comfort issues,
+              climate risks and upgrade options on a simple, glanceable scale.
             </div>
-            <div class="bar-preview">
+            <div class="bar-preview" aria-hidden="true">
               <div class="indicator" style="left:68%;"></div>
             </div>
           </div>
@@ -414,11 +441,11 @@
               <span class="usecase-name">Lending &amp; advisory</span>
             </div>
             <div class="usecase-body">
-              Equip advisors with scorecards, upgrade bundles and red→green
-              scales that show how home improvements interact with loan
-              structures and affordability.
+              Equip advisors with scorecards, upgrade bundles and scales that
+              show how home improvements interact with loan structures and
+              affordability.
             </div>
-            <div class="bar-preview">
+            <div class="bar-preview" aria-hidden="true">
               <div class="indicator" style="left:72%;"></div>
             </div>
           </div>
@@ -430,10 +457,10 @@
             </div>
             <div class="usecase-body">
               Provide underwriters and customers with peril scores and
-              resilience bundles that reduce risk from flood, water, wind
-              and heat.
+              resilience bundles that reduce risk from flood, water, wind and
+              heat.
             </div>
-            <div class="bar-preview">
+            <div class="bar-preview" aria-hidden="true">
               <div class="indicator" style="left:55%;"></div>
             </div>
           </div>
@@ -447,65 +474,66 @@
         <div class="section-title">Live demo views</div>
         <h2>Open each prototype screen</h2>
         <p style="font-size:13px;margin-top:4px;color:#64748b;">
-          Each screen uses the same Lightspark scoring model and red→green scale,
-          framed for a different Bank X journey.
+          Each screen uses the same Lightspark scoring model and design
+          language, framed for a different Bank X journey.
         </p>
 
-        <div class="demo-list" aria-label="Demo screens">
-          <div class="demo-card">
-            <div class="demo-title">
-              <span class="demo-tag">Use Case 01</span>
-              <span>Homeowner Energy Report</span>
-            </div>
-            <div class="demo-desc">
-              Customer-facing report combining home energy scores, carbon and
-              energy metrics, upgrade bundles, and example financing options.
-            </div>
-            <div class="demo-meta">
-              Homeowner journey • Clear, action-oriented view.
-            </div>
-            <a class="btn-primary" href="homeowner_report.html">
-              <span aria-hidden="true">➡️</span>
-              Open Homeowner Energy Report
-            </a>
-          </div>
+<div class="demo-list" aria-label="Demo screens">
+  <div class="demo-card">
+    <div class="demo-title">
+      <span class="demo-tag">Use Case 01</span>
+      <span>Homeowner Energy Report</span>
+    </div>
+    <div class="demo-desc">
+      Customer-facing report combining home energy scores, carbon and
+      energy metrics, upgrade bundles and example financing options.
+    </div>
+    <div class="demo-meta">
+      Homeowner journey • Clear, action-oriented view.
+    </div>
+    <a class="btn-primary" href="homeowner_report.html">
+      <span aria-hidden="true">➡️</span>
+      Open Homeowner Energy Report
+    </a>
+  </div>
 
-          <div class="demo-card">
-            <div class="demo-title">
-              <span class="demo-tag">Use Case 02</span>
-              <span>Lending Advisor Dashboard</span>
-            </div>
-            <div class="demo-desc">
-              Internal view for advisors showing the same Lightspark data plus
-              affordability, cash flow and upgrade bundle structures.
-            </div>
-            <div class="demo-meta">
-              Advisor journey • Links upgrades to lending decisions.
-            </div>
-            <a class="btn-primary" href="mortgage-dashboard.html">
-              <span aria-hidden="true">➡️</span>
-              Open Lending Advisor Dashboard
-            </a>
-          </div>
+  <div class="demo-card">
+    <div class="demo-title">
+      <span class="demo-tag">Use Case 02</span>
+      <span>Lending Advisor Dashboard</span>
+    </div>
+    <div class="demo-desc">
+      Internal view for advisors showing Lightspark scores alongside
+      affordability, cash flow and upgrade bundle structures.
+    </div>
+    <div class="demo-meta">
+      Advisor journey • Links upgrades to lending decisions.
+    </div>
+    <a class="btn-primary" href="mortgage-dashboard.html">
+      <span aria-hidden="true">➡️</span>
+      Open Lending Advisor Dashboard
+    </a>
+  </div>
 
-          <div class="demo-card">
-            <div class="demo-title">
-              <span class="demo-tag">Use Case 03</span>
-              <span>Insurance Risk Portal</span>
-            </div>
-            <div class="demo-desc">
-              Underwriting view with climate risk scores (1–5), peril breakdowns
-              and resilience bundles, all aligned to the same red→green scale.
-            </div>
-            <div class="demo-meta">
-              Insurance journey • Peril scores and mitigation on one page.
-            </div>
-            <a class="btn-primary" href="insurance-portal.html">
-              <span aria-hidden="true">➡️</span>
-              Open Insurance Risk Portal
-            </a>
-          </div>
-        </div>
+  <div class="demo-card">
+    <div class="demo-title">
+      <span class="demo-tag">Use Case 03</span>
+      <span>Insurance Risk Portal</span>
+    </div>
+    <div class="demo-desc">
+      Underwriting view with climate risk scores (1–5), peril
+      breakdowns and resilience bundles presented on a single page.
+    </div>
+    <div class="demo-meta">
+      Insurance journey • Peril scores and mitigation on one page.
+    </div>
+    <a class="btn-primary" href="insurance-portal.html">
+      <span aria-hidden="true">➡️</span>
+      Open Insurance Risk Portal
+    </a>
+  </div>
+</div>
+
       </div>
     </div>
   </section>

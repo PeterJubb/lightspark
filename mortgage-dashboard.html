@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,14 +17,12 @@
       --radius-card: 12px;
       --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
 
-      /* Rainbow gradient used for ALL scale bars */
+      /* red → yellow → green health band */
       --rainbow-gradient: linear-gradient(
         90deg,
-        #2563eb,  /* blue   */
-        #22c55e,  /* green  */
-        #eab308,  /* yellow */
-        #f97316,  /* orange */
-        #ef4444   /* red    */
+        #ef4444,  /* red   */
+        #fbbf24,  /* yellow*/
+        #22c55e   /* green */
       );
     }
 
@@ -65,12 +62,12 @@
     }
 
     .logo {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-weight: 700;
+      font-size: 20px;
       color: var(--ls-blue);
-      letter-spacing: 0.02em;
     }
 
     .logo-mark {
@@ -89,11 +86,11 @@
       height: 2px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
     }
 
     .tagline {
-      font-size: 13px;
+      font-size: 12px;
       color: #64748b;
     }
 
@@ -101,7 +98,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 999px;
       font-size: 12px;
       background: rgba(61, 32, 174, 0.05);
@@ -125,380 +122,256 @@
       margin: 24px auto 40px;
       padding: 0 24px;
       display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
-      gap: 24px;
+      grid-template-columns: 1.6fr 1.2fr;
+      gap: 20px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .layout {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
       }
-    }
-
-    h1, h2, h3 {
-      margin: 0;
-      font-weight: 600;
-      color: var(--ls-navy);
-    }
-
-    h1 {
-      font-size: 26px;
-      letter-spacing: 0.01em;
-    }
-
-    h2 {
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
-
-    h3 {
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-
-    p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.5;
     }
 
     .card {
       background: #ffffff;
       border-radius: var(--radius-card);
+      border: 1px solid var(--ls-border);
+      padding: 18px 18px 16px;
       box-shadow: var(--shadow-card);
-      padding: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.12);
     }
 
     .card + .card {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .section-title {
-      font-size: 13px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
       color: #94a3b8;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .subtle-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #94a3b8;
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ls-navy);
     }
 
-    /* Buttons */
-    .btn {
-      border-radius: 999px;
-      padding: 7px 14px;
-      border: 1px solid transparent;
+    h2 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ls-navy);
+    }
+
+    p {
+      margin: 0;
       font-size: 13px;
-      line-height: 1.1;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: transparent;
-      color: var(--ls-blue);
-      text-decoration: none;
+      line-height: 1.5;
+      color: #475569;
     }
 
-    .btn-primary {
-      background: var(--ls-blue);
-      color: #ffffff;
-      border-color: var(--ls-blue);
-    }
-
-    .btn-outline {
-      background: #ffffff;
-      border-color: #e2e8f0;
-    }
-
-    .btn span[aria-hidden="true"] {
-      font-size: 14px;
-    }
-
-    .section-header {
+    /* Overview / borrower strip */
+    .summary-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .section-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* Property summary */
-    .property-summary-top {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .property-line {
+    .borrower-meta {
       font-size: 13px;
-      color: #64748b;
+      color: #4b5563;
     }
 
-    .property-line strong {
+    .borrower-meta strong {
       color: var(--ls-navy);
-      font-weight: 600;
     }
 
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      font-size: 12px;
+    .flag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
       margin-top: 4px;
     }
 
-    @media (max-width: 900px) {
-      .meta-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .flag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      color: #4b5563;
+    }
+
+    .flag-green {
+      background: #ecfdf5;
+      border-color: #bbf7d0;
+      color: #15803d;
+    }
+
+    .flag-amber {
+      background: #fffbeb;
+      border-color: #fed7aa;
+      color: #92400e;
+    }
+
+    .flag-red {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #b91c1c;
+    }
+
+    /* Metric bands */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 880px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    .meta-item {
-      border-radius: 8px;
-      background: #f8fafc;
+    .metric-card {
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
       padding: 8px 10px;
+      background: #f8fafc;
+      font-size: 12px;
     }
 
-    .meta-label {
+    .metric-label {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       color: #94a3b8;
       margin-bottom: 2px;
     }
 
-    .meta-value {
-      font-weight: 500;
-      color: var(--ls-navy);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 11px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-top: 8px;
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #f97316;
-      margin-right: 6px;
-    }
-
-    /* Metric / scale styles */
-    .score-list {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .score-item {
-      padding: 12px 14px;
-      border-radius: 10px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      display: grid;
-      grid-template-columns: minmax(0, 2.7fr) auto;
-      column-gap: 12px;
-      row-gap: 4px;
-      align-items: center;
-    }
-
-    .score-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ls-navy);
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .score-title-icon {
-      font-size: 14px;
-    }
-
-    .score-value {
-      font-size: 18px;
-      font-weight: 600;
-      text-align: right;
-      white-space: nowrap;
-      color: var(--ls-navy);
-    }
-
-    .score-meter {
-      grid-column: 1 / -1;
+    .metric-value-row {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
     }
 
-    .metric-bar {
-      width: 100%;
+    .metric-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ls-navy);
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    .metric-band {
+      margin-top: 6px;
       height: 8px;
       border-radius: 999px;
-      background: #e2e8f0;
+      background: #e5e7eb;
       overflow: hidden;
       position: relative;
     }
 
-    .metric-fill {
-      height: 100%;
-      border-radius: inherit;
+    .metric-band-fill {
+      position: absolute;
+      inset: 0;
       background: var(--rainbow-gradient);
-      transform-origin: left;
     }
 
-    .metric-label-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: #94a3b8;
-      margin-top: 2px;
-      gap: 8px;
-      flex-wrap: wrap;
+    .metric-indicator {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.5);
+      background: #020617;
     }
 
-    .metric-label-row strong {
-      color: #0f172a;
-    }
-
-    .metric-delta-text {
-      font-size: 12px;
-      color: #64748b;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+    .metric-footnote {
       margin-top: 4px;
+      font-size: 11px;
+      color: #6b7280;
     }
 
-    .metric-delta-strong {
-      font-weight: 600;
-      color: #16a34a;
-    }
-
-    /* Loan impact */
-    .kpi-grid {
+    /* Cashflow & structure */
+    .cashflow-grid {
+      margin-top: 10px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 12px;
+      grid-template-columns: 1.1fr 1.1fr 0.8fr;
+      gap: 10px;
     }
 
-    @media (max-width: 900px) {
-      .kpi-grid {
-        grid-template-columns: minmax(0, 1fr);
+    @media (max-width: 960px) {
+      .cashflow-grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    .kpi-card {
-      background: #f8fafc;
+    .cash-card {
       border-radius: 10px;
-      padding: 12px 14px;
       border: 1px solid #e2e8f0;
-      font-size: 13px;
+      padding: 8px 10px;
+      background: #ffffff;
+      font-size: 12px;
     }
 
-    .kpi-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #94a3b8;
-      margin-bottom: 4px;
+    .cash-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 4px;
     }
 
-    .kpi-main {
-      font-size: 18px;
-      font-weight: 600;
+    .cash-row strong {
       color: var(--ls-navy);
     }
 
-    .kpi-sub {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-
-    .kpi-delta {
-      font-size: 12px;
-      margin-top: 4px;
-      color: #16a34a;
-      font-weight: 500;
-    }
-
-    /* Risk chips row */
-    .risk-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 11px;
-      margin-top: 12px;
-    }
-
-    .risk-chip {
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .risk-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #f97316;
-    }
-
-    .risk-dot--low {
-      background: #22c55e;
-    }
-
-    .risk-dot--high {
-      background: #ef4444;
-    }
-
-    /* Right: loan options + bundle summary */
-    .bundle-summary-box {
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 12px 14px;
-      border: 1px solid #e2e8f0;
+    .cash-highlight {
       font-size: 13px;
-      margin-top: 12px;
+      font-weight: 600;
+      color: var(--ls-navy);
+      margin-top: 6px;
     }
 
-    .bundle-line {
+    .cash-footnote {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* Bundle panel */
+    .bundle-card {
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      padding: 10px 12px;
+      background: #f9fafb;
+      margin-top: 10px;
+    }
+
+    .bundle-header-row {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+      align-items: center;
+      gap: 12px;
     }
 
-    .bundle-line strong {
+    .bundle-title {
+      font-size: 14px;
+      font-weight: 600;
       color: var(--ls-navy);
     }
 
@@ -506,363 +379,505 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 6px;
-      font-size: 11px;
     }
 
-    .bundle-badge {
-      border-radius: 999px;
+    .badge {
       padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: #4b5563;
+    }
+
+    .badge-green {
       background: #ecfdf5;
+      border-color: #bbf7d0;
       color: #15803d;
     }
 
-    .loan-grid {
+    .bundle-body {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    .bundle-kpis {
+      margin-top: 8px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
-      margin-top: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
     }
 
-    .loan-card {
-      border-radius: 10px;
+    @media (max-width: 880px) {
+      .bundle-kpis {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bundle-kpi {
+      border-radius: 8px;
       border: 1px solid #e2e8f0;
+      padding: 6px 8px;
       background: #ffffff;
-      padding: 14px 14px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      font-size: 11px;
+    }
+
+    .bundle-kpi-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+      margin-bottom: 2px;
+    }
+
+    .bundle-kpi-value {
       font-size: 13px;
-    }
-
-    .loan-name {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .loan-main {
-      font-size: 18px;
       font-weight: 600;
       color: var(--ls-navy);
     }
 
-    .loan-sub {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .loan-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 10px;
-      margin-top: 4px;
+    .bundle-kpi-footnote {
+      margin-top: 2px;
       font-size: 11px;
-      color: #94a3b8;
+      color: #6b7280;
     }
 
-    .loan-footer {
-      margin-top: 10px;
+    /* Pipeline & notes */
+    .pipeline-list {
+      margin-top: 8px;
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    .pipeline-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       gap: 8px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
     }
 
-    .loan-cta {
+    .pipeline-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .pipeline-right {
+      font-size: 11px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: #4b5563;
+    }
+
+    .tag-green {
+      background: #ecfdf5;
+      border-color: #bbf7d0;
+      color: #15803d;
+    }
+
+    .tag-amber {
+      background: #fffbeb;
+      border-color: #fed7aa;
+      color: #92400e;
+    }
+
+    .tag-red {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #b91c1c;
+    }
+
+    .notes-list {
+      margin-top: 6px;
+      padding-left: 16px;
       font-size: 12px;
-      padding: 6px 10px;
+      color: #4b5563;
+    }
+
+    /* Sidebar */
+    .sidebar .card {
+      margin-bottom: 14px;
+    }
+
+    .list-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    .list-row strong {
+      color: var(--ls-navy);
+    }
+
+    .list-bullets {
+      margin-top: 4px;
+      padding-left: 16px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    .cta-row {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--ls-blue);
+      color: #ffffff;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .btn-primary span[aria-hidden="true"] {
+      font-size: 14px;
     }
 
     footer {
-      padding: 16px 24px 24px;
+      padding: 18px 24px 24px;
       font-size: 11px;
-      color: #94a3b8;
+      color: #9ca3af;
       text-align: center;
     }
   </style>
 </head>
+
 <body class="page">
 <header>
   <div class="header-inner">
     <div>
-      <div class="logo" aria-label="Lightspark">
-        <div class="logo-mark" aria-hidden="true"></div>
+      <div class="logo">
+        <div class="logo-mark"></div>
         <span>Lightspark</span>
       </div>
       <div class="tagline">Mortgage Specialist Dashboard</div>
     </div>
     <div class="pill">
       <span class="pill-dot" aria-hidden="true"></span>
-      <span>Internal advisor view • Demo data</span>
+      <span>Demo data • Internal view</span>
     </div>
   </div>
 </header>
 
 <main>
-  <section class="layout" aria-label="Mortgage dashboard">
-    <!-- LEFT: Property + scores + lending impact -->
+  <section class="layout" aria-label="Mortgage specialist dashboard">
+    <!-- LEFT COLUMN -->
     <div>
-      <article class="card" aria-label="Property & Lightspark scores">
-        <div class="section-title">Property & scores</div>
-        <div class="property-summary-top">
-          <h1>1234 Main Street</h1>
-          <div class="property-line">
-            Vancouver, BC • Grandview-Woodland • Detached, 2 storeys + basement
+      <article class="card">
+        <div class="section-title">File overview</div>
+        <div class="summary-header">
+          <div>
+            <h1>Alex &amp; Sam Chen</h1>
+            <div class="borrower-meta">
+              Refinance with upgrade bundle • <strong>1234 Main Street</strong>
+            </div>
+            <div class="flag-row">
+              <span class="flag flag-green">Strong file</span>
+              <span class="flag flag-amber">Upgrade financing</span>
+              <span class="flag">Family of four</span>
+            </div>
           </div>
-          <div class="property-line">
-            <strong>Applicant:</strong> Alex Chen • <strong>TD Client ID:</strong> 123-456-789
+          <div class="borrower-meta" style="text-align:right;">
+            <div><strong>Deal size</strong> $820,000</div>
+            <div><strong>Upgrade ask</strong> $65,000</div>
           </div>
         </div>
 
-        <div class="meta-grid" aria-label="Key property & loan facts">
-          <div class="meta-item">
-            <div class="meta-label">Vintage</div>
-            <div class="meta-value">1927</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Approx. area</div>
-            <div class="meta-value">3,200 sq ft</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Current balance</div>
-            <div class="meta-value">$620,000</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Est. value*</div>
-            <div class="meta-value">$1,050,000</div>
-          </div>
-        </div>
-
-        <div class="badge">
-          <span class="badge-dot"></span>
-          Eligible for energy efficiency upgrade financing
-        </div>
-
-        <!-- Score metrics with rainbow bars -->
-        <div class="score-list">
-          <!-- Lightspark Score -->
-          <div class="score-item">
-            <div class="score-title">
-              <span class="score-title-icon">✨</span> Lightspark Score
+        <!-- GDS / TDS / Score -->
+        <div class="metric-grid" aria-label="Affordability metrics">
+          <div class="metric-card">
+            <div class="metric-label">GDS ratio</div>
+            <div class="metric-value-row">
+              <div class="metric-value">31%</div>
+              <div class="metric-sub">Target &lt; 35%</div>
             </div>
-            <div class="score-value">75 / 100</div>
-            <div class="score-meter">
-              <div class="metric-bar" aria-hidden="true">
-                <div class="metric-fill" style="width: 75%;"></div>
-              </div>
-              <div class="metric-label-row">
-                <span>Current: <strong>Good</strong></span>
-                <span>Potential after upgrades: <strong>89</strong></span>
-              </div>
+            <div class="metric-band">
+              <div class="metric-band-fill"></div>
+              <div class="metric-indicator" style="left: 40%;"></div>
+            </div>
+            <div class="metric-footnote">
+              Includes proposed mortgage + property tax + utilities.
             </div>
           </div>
 
-          <!-- Carbon -->
-          <div class="score-item">
-            <div class="score-title">
-              <span class="score-title-icon">🌫️</span> Carbon emissions
+          <div class="metric-card">
+            <div class="metric-label">TDS ratio</div>
+            <div class="metric-value-row">
+              <div class="metric-value">37%</div>
+              <div class="metric-sub">Target &lt; 42%</div>
             </div>
-            <div class="score-value">12 tCO₂e / yr</div>
-            <div class="score-meter">
-              <div class="metric-bar" aria-hidden="true">
-                <!-- Internal mapping of 12 t to ~55% fill -->
-                <div class="metric-fill" style="width: 55%;"></div>
-              </div>
-              <div class="metric-delta-text">
-                <span>Comparable to similar older homes nearby.</span>
-                <span>After upgrades:
-                  <span class="metric-delta-strong">7 tCO₂e / yr (−5)</span>
-                </span>
-              </div>
+            <div class="metric-band">
+              <div class="metric-band-fill"></div>
+              <div class="metric-indicator" style="left: 48%;"></div>
+            </div>
+            <div class="metric-footnote">
+              Includes auto loan and revolving card payments.
             </div>
           </div>
 
-          <!-- Energy -->
-          <div class="score-item">
-            <div class="score-title">
-              <span class="score-title-icon">⚡</span> Energy use
+          <div class="metric-card">
+            <div class="metric-label">Home energy score</div>
+            <div class="metric-value-row">
+              <div class="metric-value">62 / 100</div>
+              <div class="metric-sub">Modeled vs. similar homes</div>
             </div>
-            <div class="score-value">232 GJ / yr</div>
-            <div class="score-meter">
-              <div class="metric-bar" aria-hidden="true">
-                <!-- 232 GJ mapped internally to ~66% fill -->
-                <div class="metric-fill" style="width: 66%;"></div>
-              </div>
-              <div class="metric-delta-text">
-                <span>Above-average usage for this building type.</span>
-                <span>After upgrades:
-                  <span class="metric-delta-strong">165 GJ / yr (−67)</span>
-                </span>
-              </div>
+            <div class="metric-band">
+              <div class="metric-band-fill"></div>
+              <div class="metric-indicator" style="left: 45%;"></div>
+            </div>
+            <div class="metric-footnote">
+              Upgrades lift this into the top quartile of local homes.
             </div>
           </div>
         </div>
 
-        <div style="margin-top: 10px; font-size:11px; color:#94a3b8;">
-          *Illustrative valuation only. Actual lending decisions should rely on TD appraisal or AVM.
+        <!-- Cashflow / structure -->
+        <div class="cashflow-grid" aria-label="Cash flow &amp; structure">
+          <div class="cash-card">
+            <div class="metric-label">Current monthly</div>
+            <div class="cash-row">
+              <span>Mortgage P&amp;I</span>
+              <span>$3,350</span>
+            </div>
+            <div class="cash-row">
+              <span>Property tax</span>
+              <span>$420</span>
+            </div>
+            <div class="cash-row">
+              <span>Utilities (avg.)</span>
+              <span>$240</span>
+            </div>
+            <div class="cash-row">
+              <span>Other debt payments</span>
+              <span>$690</span>
+            </div>
+            <div class="cash-highlight">
+              Total: $4,700 / month
+            </div>
+            <div class="cash-footnote">
+              Based on last 6 months of observed payments.
+            </div>
+          </div>
+
+          <div class="cash-card">
+            <div class="metric-label">Proposed with upgrades</div>
+            <div class="cash-row">
+              <span>New mortgage P&amp;I</span>
+              <span>$3,720</span>
+            </div>
+            <div class="cash-row">
+              <span>Property tax</span>
+              <span>$420</span>
+            </div>
+            <div class="cash-row">
+              <span>Utilities (modeled)</span>
+              <span>$170</span>
+            </div>
+            <div class="cash-row">
+              <span>Other debt payments</span>
+              <span>$540</span>
+            </div>
+            <div class="cash-highlight">
+              Total: $4,850 / month
+            </div>
+            <div class="cash-footnote">
+              Net monthly change ≈ +$150 with upgrades included.
+            </div>
+          </div>
+
+          <div class="cash-card">
+            <div class="metric-label">Upgrade bundle impact</div>
+            <div class="cash-row">
+              <span>Modeled energy savings</span>
+              <span>$120 / month</span>
+            </div>
+            <div class="cash-row">
+              <span>Maintenance avoided</span>
+              <span>$40 / month</span>
+            </div>
+            <div class="cash-row">
+              <span>Net cash impact</span>
+              <span><strong>~neutral</strong></span>
+            </div>
+            <div class="cash-footnote">
+              File remains within policy GDS/TDS with this structure.
+            </div>
+          </div>
+        </div>
+
+        <!-- Upgrade bundle summary -->
+        <div class="bundle-card">
+          <div class="bundle-header-row">
+            <div>
+              <div class="bundle-title">
+                Upgrade bundle A – Comfort &amp; risk
+              </div>
+              <div class="bundle-body">
+                Insulation, windows and a heat pump water heater to reduce energy,
+                improve comfort and lower water damage risk.
+              </div>
+            </div>
+            <div class="bundle-badges">
+              <span class="badge badge-green">Policy-aligned</span>
+              <span class="badge">Within climate program</span>
+            </div>
+          </div>
+
+          <div class="bundle-kpis">
+            <div class="bundle-kpi">
+              <div class="bundle-kpi-label">Project cost</div>
+              <div class="bundle-kpi-value">$65,000</div>
+              <div class="bundle-kpi-footnote">
+                Customer is open to staging if needed.
+              </div>
+            </div>
+            <div class="bundle-kpi">
+              <div class="bundle-kpi-label">Annual savings</div>
+              <div class="bundle-kpi-value">$1,850 / yr</div>
+              <div class="bundle-kpi-footnote">
+                Combined gas &amp; electric reduction.
+              </div>
+            </div>
+            <div class="bundle-kpi">
+              <div class="bundle-kpi-label">Climate risk</div>
+              <div class="bundle-kpi-footnote">
+                Basement leak risk moves from 3.5 → 2.3 with drainage &amp; sensors.
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
-      <!-- Lending impact -->
-      <article class="card" aria-label="Lending impact">
-        <div class="section-title">Lending impact</div>
-        <h2>How the upgrade bundle affects ratios</h2>
-        <p style="font-size:13px; margin-top:4px;">
-          Use this section to understand how financing the recommended bundle changes GDS/TDS and monthly payments.
-        </p>
-
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-label">Loan amount (upgrades)</div>
-            <div class="kpi-main">$53,000</div>
-            <div class="kpi-sub">Total cost of recommended Bundle A upgrades.</div>
+      <!-- Pipeline & notes -->
+      <article class="card">
+        <div class="section-title">Pipeline &amp; next steps</div>
+        <div class="pipeline-list">
+          <div class="pipeline-item">
+            <div class="pipeline-left">
+              <strong>Contractor quote in progress</strong>
+              <span>Bundle A + optional solar add-on</span>
+            </div>
+            <div class="pipeline-right">
+              <div class="tag tag-amber">Waiting quote</div>
+              <div>ETA: 3–5 days</div>
+            </div>
           </div>
 
-          <div class="kpi-card">
-            <div class="kpi-label">GDS ratio</div>
-            <div class="kpi-main">31% → 29%</div>
-            <div class="kpi-sub">After upgrades and estimated utility savings.</div>
-            <div class="kpi-delta">Net improvement of 2 pts.</div>
+          <div class="pipeline-item">
+            <div class="pipeline-left">
+              <strong>Co-borrower income verification</strong>
+              <span>Updated pay stubs &amp; T4</span>
+            </div>
+            <div class="pipeline-right">
+              <div class="tag tag-green">Received</div>
+              <div>Uploaded yesterday</div>
+            </div>
           </div>
 
-          <div class="kpi-card">
-            <div class="kpi-label">TDS ratio</div>
-            <div class="kpi-main">38% → 36%</div>
-            <div class="kpi-sub">Assuming no additional non-mortgage debt.</div>
-            <div class="kpi-delta">Net improvement of 2 pts.</div>
+          <div class="pipeline-item">
+            <div class="pipeline-left">
+              <strong>Property tax certificate</strong>
+              <span>City of Vancouver</span>
+            </div>
+            <div class="pipeline-right">
+              <div class="tag tag-amber">Outstanding</div>
+              <div>Customer to request</div>
+            </div>
           </div>
         </div>
 
-        <div class="kpi-grid" style="margin-top: 12px;">
-          <div class="kpi-card">
-            <div class="kpi-label">Current monthly P&amp;I</div>
-            <div class="kpi-main">$3,200</div>
-            <div class="kpi-sub">Existing mortgage payment before upgrades.</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Estimated new P&amp;I</div>
-            <div class="kpi-main">$4,450</div>
-            <div class="kpi-sub">Including $53,000 upgrade amount added to mortgage.</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Net cash flow impact</div>
-            <div class="kpi-main">+$980 / mo</div>
-            <div class="kpi-sub">Before utility savings; approx. −$260 / mo after projected savings.</div>
-          </div>
-        </div>
-
-        <div class="risk-row">
-          <span class="risk-chip">
-            <span class="risk-dot risk-dot--low"></span>
-            Within TD GDS/TDS policy after upgrades
-          </span>
-          <span class="risk-chip">
-            <span class="risk-dot"></span>
-            Lightspark Score improves from 75 → 89
-          </span>
-          <span class="risk-chip">
-            <span class="risk-dot risk-dot--high"></span>
-            Carbon improves from 12 → 7 tCO₂e / yr
-          </span>
-        </div>
+        <ul class="notes-list">
+          <li>Customer has strong savings buffer and low revolving balances.</li>
+          <li>Discussed option to scale back window scope if needed.</li>
+          <li>Open to extending amortization to 30 yrs to manage payment.</li>
+        </ul>
       </article>
     </div>
 
-    <!-- RIGHT: Bundle summary + loan options for TD -->
-    <div>
-      <article class="card" aria-label="Upgrade bundle summary">
-        <div class="section-header">
-          <div>
-            <div class="section-title">Bundle A</div>
-            <h2>Upgrade bundle selected by client</h2>
-          </div>
-          <div class="section-actions">
-            <button class="btn btn-outline" type="button">
-              <span aria-hidden="true">📝</span>
-              Attach report to application
-            </button>
-          </div>
+    <!-- RIGHT COLUMN -->
+    <aside class="sidebar" aria-label="Advisor tools &amp; policy">
+      <section class="card">
+        <div class="section-title">Advisor prompts</div>
+        <div class="list-row">
+          <p><strong>1. Position the upgrade bundle.</strong></p>
+          <p>
+            Connect reduced drafts, cooler bedrooms and water risk reduction to
+            the family&apos;s experience in the home.
+          </p>
+          <p><strong>2. Walk through payment options.</strong></p>
+          <p>
+            Show the trade-off between term, amortization and including upgrades
+            now vs. later.
+          </p>
+          <p><strong>3. Confirm comfort priorities.</strong></p>
+          <p>
+            Ask which rooms feel worst today and whether they plan to finish
+            more of the basement.
+          </p>
         </div>
+      </section>
 
-        <p style="font-size:13px;">
-          Client has selected the standard comfort &amp; efficiency bundle:
-          insulation, triple-pane windows, and a high-efficiency heat pump.
-        </p>
+      <section class="card">
+        <div class="section-title">Policy &amp; program fit</div>
+        <div class="list-row">
+          <p><strong>Climate program eligibility</strong></p>
+          <ul class="list-bullets">
+            <li>Single-family detached home in eligible region.</li>
+            <li>At least one electrification or heat pump measure.</li>
+            <li>Minimum 20% modeled energy reduction.</li>
+          </ul>
 
-        <div class="bundle-summary-box">
-          <div class="bundle-line">
-            <span><strong>Bundle cost (est.):</strong> $25,500 equipment + install</span>
-            <span><strong>Total financed:</strong> $53,000</span>
-          </div>
-          <div class="bundle-badges">
-            <span class="bundle-badge">+14 Lightspark Score</span>
-            <span class="bundle-badge">−5 tCO₂e / yr</span>
-            <span class="bundle-badge">−67 GJ / yr</span>
-          </div>
+          <p><strong>Credit policy check</strong></p>
+          <ul class="list-bullets">
+            <li>Beacon scores &gt; 720 for both borrowers.</li>
+            <li>Debt history is clean; no missed payments last 24 months.</li>
+            <li>GDS/TDS within standard limits under proposed structure.</li>
+          </ul>
         </div>
+      </section>
 
-        <div style="margin-top: 12px; font-size:12px; color:#64748b;">
-          Advisor view only. Values are modeled estimates based on partner data and Lightspark’s energy model.
-          Final approvals should follow TD lending and risk policies.
+      <section class="card">
+        <div class="section-title">Actions</div>
+        <div class="cta-row">
+          <a class="btn-primary" href="homeowner_report_reversed.html">
+            <span aria-hidden="true">↗</span>
+            Open full Home Energy Report
+          </a>
+          <span style="font-size:11px;color:#6b7280;">
+            Includes detailed upgrade breakdown and climate risk view.
+          </span>
         </div>
-      </article>
-
-      <article class="card" aria-label="Loan options">
-        <div class="section-header">
-          <div>
-            <div class="section-title">Loan structures</div>
-            <h2>Example TD financing options</h2>
-          </div>
-        </div>
-
-        <div class="loan-grid">
-          <!-- Mortgage add-on -->
-          <article class="loan-card">
-            <div class="loan-name">Mortgage add-on (preferred)</div>
-            <div class="loan-main">$1,250 / month</div>
-            <div class="loan-sub">
-              Adds $53,000 to existing mortgage for 15 years at example 4.2% APR.
-            </div>
-            <div class="loan-meta">
-              <span>Loan amount: $53,000</span>
-              <span>Structure: Mortgage add-on</span>
-              <span>Term: 15 years</span>
-            </div>
-            <div class="loan-footer">
-              <button class="btn btn-primary loan-cta" type="button">
-                Send terms to client
-              </button>
-              <span style="font-size:11px; color:#94a3b8;">Subject to TD approval.</span>
-            </div>
-          </article>
-
-          <!-- HELOC example -->
-          <article class="loan-card">
-            <div class="loan-name">HELOC option</div>
-            <div class="loan-main">Varies / interest-only</div>
-            <div class="loan-sub">
-              Draws from existing HELOC up to $30,000 for partial upgrades, interest-only payments at a variable rate.
-            </div>
-            <div class="loan-meta">
-              <span>Draw amount: up to $30,000</span>
-              <span>Structure: HELOC</span>
-              <span>Use for phased upgrades</span>
-            </div>
-            <div class="loan-footer">
-              <button class="btn btn-outline loan-cta" type="button">
-                Compare in TD system
-              </button>
-              <span style="font-size:11px; color:#94a3b8;">Rates and limits depend on client profile.</span>
-            </div>
-          </article>
-        </div>
-      </article>
-    </div>
+      </section>
+    </aside>
   </section>
 </main>
 
 <footer>
-  Lightspark Mortgage Specialist Dashboard • Demo only • For internal TD discussion, not a commitment to lend.
+  Lightspark – Mortgage Specialist Dashboard • Demo data only • Not for external use.
 </footer>
 </body>
 </html>
