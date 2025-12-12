@@ -5,739 +5,632 @@
   <title>Lightspark – Insurance Risk Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --ls-blue: #3d20ae;
-      --ls-green: #3bf49c;
-      --ls-red: #ff5a5f;
-      --ls-yellow: #ffd645;
-      --ls-navy: #1e1f33;
-      --ls-slate: #4a5568;
-      --ls-soft-grey: #f5f7fa;
-      --ls-border: #e2e8f0;
-      --radius-card: 12px;
-      --shadow-card: 0 10px 25px rgba(15, 23, 42, 0.08);
+    :root{
+      --ls-blue:#3d20ae;
+      --ls-green:#3bf49c;
+      --ls-red:#ff5a5f;
+      --ls-yellow:#ffd645;
 
-      /* rainbow gradient used for ALL scale bars */
-      --rainbow-gradient: linear-gradient(
-        90deg,
-        #2563eb,  /* blue   */
-        #22c55e,  /* green  */
-        #eab308,  /* yellow */
-        #f97316,  /* orange */
-        #ef4444   /* red    */
-      );
+      --ls-navy:#1e1f33;
+      --ls-slate:#4a5568;
+      --ls-soft-grey:#f5f7fa;
+      --ls-border:#e2e8f0;
+
+      --radius-card:14px;
+      --shadow-card:0 10px 25px rgba(15,23,42,0.08);
+
+      /* red → yellow → green (same as other docs) */
+      --scale-gradient:linear-gradient(90deg, var(--ls-red), var(--ls-yellow), var(--ls-green));
     }
 
-    * {
-      box-sizing: border-box;
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Inter",sans-serif;
+      background:var(--ls-soft-grey);
+      color:var(--ls-slate);
     }
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      background: var(--ls-soft-grey);
-      color: var(--ls-slate);
+    .page{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    /* ===== HEADER (standardized) ===== */
+    header{
+      background:#fff;
+      border-bottom:1px solid var(--ls-border);
+      position:sticky;
+      top:0;
+      z-index:10;
     }
 
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid var(--ls-border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    .header-inner{
+      max-width:1200px;
+      margin:0 auto;
+      padding:14px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
 
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:260px;
     }
 
-    .logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      color: var(--ls-blue);
-      letter-spacing: 0.02em;
+    .logo-image{
+      height:64px;
+      width:auto;
+      max-width:520px;
+      object-fit:contain;
+      display:block;
     }
 
-    .logo-mark {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, var(--ls-green), var(--ls-blue));
-      position: relative;
-      overflow: hidden;
+    .tagline{
+      font-size:12px;
+      color:#64748b;
     }
 
-    .logo-mark::after {
-      content: "";
-      position: absolute;
-      inset: 28% 24% auto;
-      height: 2px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    .top-right{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:10px;
+      min-width:260px;
     }
 
-    .tagline {
-      font-size: 13px;
-      color: #64748b;
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:12px;
+      background:rgba(61,32,174,0.06);
+      color:var(--ls-blue);
+      border:1px solid rgba(61,32,174,0.2);
+      white-space:nowrap;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: rgba(61, 32, 174, 0.05);
-      color: var(--ls-blue);
-      border: 1px solid rgba(61, 32, 174, 0.18);
+    .pill-dot{
+      width:8px;height:8px;border-radius:999px;background:var(--ls-green);
     }
 
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--ls-green);
+    @media(max-width:980px){
+      .header-inner{flex-direction:column;align-items:flex-start;}
+      .top-right{align-items:flex-start;min-width:unset;}
+      .brand{min-width:unset;}
     }
 
-    main {
-      flex: 1;
+    main{flex:1;}
+
+    .layout{
+      max-width:1200px;
+      margin:24px auto 44px;
+      padding:0 24px;
+      display:grid;
+      grid-template-columns:minmax(0,1.7fr) minmax(0,1.5fr);
+      gap:24px;
     }
 
-    .layout {
-      max-width: 1200px;
-      margin: 24px auto 40px;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.5fr);
-      gap: 24px;
+    @media(max-width:900px){
+      .layout{grid-template-columns:1fr;}
     }
 
-    @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    h1,h2,h3{
+      margin:0;
+      font-weight:600;
+      color:var(--ls-navy);
     }
 
-    h1, h2, h3 {
-      margin: 0;
-      font-weight: 600;
-      color: var(--ls-navy);
+    h1{font-size:26px; letter-spacing:.01em;}
+    h2{font-size:20px; margin-bottom:8px;}
+    h3{font-size:16px; margin-bottom:4px;}
+
+    p{
+      margin:0;
+      font-size:14px;
+      line-height:1.5;
+      color:#475569;
     }
 
-    h1 {
-      font-size: 26px;
-      letter-spacing: 0.01em;
+    .card{
+      background:#fff;
+      border-radius:var(--radius-card);
+      box-shadow:var(--shadow-card);
+      padding:24px;
+      border:1px solid rgba(148,163,184,0.14);
     }
 
-    h2 {
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
+    .card + .card{margin-top:16px;}
 
-    h3 {
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-
-    p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: var(--radius-card);
-      box-shadow: var(--shadow-card);
-      padding: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.12);
-    }
-
-    .card + .card {
-      margin-top: 16px;
-    }
-
-    .section-title {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #94a3b8;
-      margin-bottom: 4px;
-    }
-
-    .subtle-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #94a3b8;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 7px 14px;
-      border: 1px solid transparent;
-      font-size: 13px;
-      line-height: 1.1;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: transparent;
-      color: var(--ls-blue);
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: var(--ls-blue);
-      color: #ffffff;
-      border-color: var(--ls-blue);
-    }
-
-    .btn-outline {
-      background: #ffffff;
-      border-color: #e2e8f0;
-    }
-
-    .btn span[aria-hidden="true"] {
-      font-size: 14px;
+    .section-title{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:#94a3b8;
+      margin-bottom:6px;
     }
 
     /* Property header */
-    .property-header {
-      display: grid;
-      grid-template-columns: 2.1fr 2.3fr;
-      gap: 16px;
-      align-items: stretch;
+    .property-header{
+      display:grid;
+      grid-template-columns:2.1fr 2.3fr;
+      gap:16px;
+      align-items:stretch;
+      margin-top:10px;
     }
 
-    @media (max-width: 720px) {
-      .property-header {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media(max-width:720px){
+      .property-header{grid-template-columns:1fr;}
     }
 
-    .property-photo {
-      border-radius: 10px;
-      overflow: hidden;
-      background: #cbd5e1;
-      min-height: 170px;
-      position: relative;
+    .property-photo{
+      border-radius:12px;
+      overflow:hidden;
+      background:#cbd5e1;
+      min-height:190px;
+      position:relative;
+      border:1px solid #e2e8f0;
     }
 
-    .property-photo-placeholder {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #64748b, #0f172a);
-      opacity: 0.85;
+    .property-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    .property-photo::before {
-      content: "Exposure map";
-      position: absolute;
-      left: 12px;
-      top: 12px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.8);
-      color: #e2e8f0;
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .property-photo::before{
+      content:"Exposure map";
+      position:absolute;
+      left:12px;
+      top:12px;
+      padding:3px 10px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.82);
+      color:#e2e8f0;
+      font-size:11px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      z-index:2;
     }
 
-    .map-overlay-chips {
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+    .map-overlay-chips{
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      z-index:2;
     }
 
-    .map-chip {
-      border-radius: 999px;
-      padding: 3px 9px;
-      font-size: 10px;
-      background: rgba(15, 23, 42, 0.72);
-      color: #e5e7eb;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .map-chip{
+      border-radius:999px;
+      padding:3px 9px;
+      font-size:10px;
+      background:rgba(15,23,42,0.72);
+      color:#e5e7eb;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
     }
 
-    .map-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #facc15;
+    .map-dot{
+      width:8px;height:8px;border-radius:999px;background:#facc15;
     }
 
-    .property-meta {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 16px;
+    .property-meta{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:16px;
     }
 
-    .property-meta-top > h1 {
-      margin-bottom: 4px;
+    .property-address{
+      font-size:14px;
+      color:#64748b;
+      margin-top:2px;
     }
 
-    .property-address {
-      font-size: 14px;
-      color: #64748b;
+    .line-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      font-size:12px;
+      color:#64748b;
+      margin-top:8px;
     }
 
-    .line-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 14px;
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 6px;
+    .line-row strong{
+      color:var(--ls-navy);
+      font-weight:600;
     }
 
-    .line-row strong {
-      color: var(--ls-navy);
-      font-weight: 600;
+    .meta-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      font-size:12px;
+      margin-top:10px;
     }
 
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      font-size: 12px;
+    @media(max-width:720px){
+      .meta-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
     }
 
-    @media (max-width: 720px) {
-      .meta-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .meta-item{
+      border-radius:10px;
+      background:#f8fafc;
+      padding:8px 10px;
+      border:1px solid #e2e8f0;
     }
 
-    .meta-item {
-      border-radius: 8px;
-      background: #f8fafc;
-      padding: 8px 10px;
+    .meta-label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#94a3b8;
+      margin-bottom:2px;
     }
 
-    .meta-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #94a3b8;
-      margin-bottom: 2px;
+    .meta-value{
+      font-weight:600;
+      color:var(--ls-navy);
     }
 
-    .meta-value {
-      font-weight: 500;
-      color: var(--ls-navy);
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 9px;
+      border-radius:999px;
+      background:#fef3c7;
+      color:#92400e;
+      font-size:11px;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      margin-top:10px;
+      width:max-content;
+      border:1px solid #fde68a;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 11px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-top: 8px;
+    .badge-dot{
+      width:8px;height:8px;border-radius:999px;background:#f97316;margin-right:6px;
     }
 
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #f97316;
-      margin-right: 6px;
+    /* Score tiles */
+    .scores-card{margin-top:18px;}
+
+    .scores-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
     }
 
-    /* Climate risk scores w/ rainbow bars */
-    .scores-card {
-      margin-top: 18px;
+    .score-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
     }
 
-    .scores-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
+    @media(max-width:720px){
+      .score-grid{grid-template-columns:1fr;}
     }
 
-    .score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+    .score-card{
+      padding:10px 12px;
+      border-radius:12px;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      font-size:13px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      column-gap:8px;
+      row-gap:6px;
+      align-items:center;
     }
 
-    @media (max-width: 720px) {
-      .score-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    .score-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:700;
+      color:var(--ls-navy);
     }
 
-    .score-card {
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      font-size: 13px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      column-gap: 8px;
-      row-gap: 4px;
-      align-items: center;
+    .score-icon{
+      width:22px;height:22px;border-radius:999px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:13px;background:#e0f2fe;
+      border:1px solid #bae6fd;
     }
 
-    .score-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      color: var(--ls-navy);
+    .score-value{
+      font-weight:800;
+      text-align:right;
+      white-space:nowrap;
+      font-size:16px;
+      color:var(--ls-navy);
     }
 
-    .score-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      background: #e0f2fe;
+    .score-meter{
+      grid-column:1 / -1;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:11px;
     }
 
-    .score-value {
-      font-weight: 600;
-      text-align: right;
-      white-space: nowrap;
-      font-size: 16px;
+    .metric-bar{
+      width:100%;
+      height:8px;
+      border-radius:999px;
+      background:#e2e8f0;
+      overflow:hidden;
+      position:relative;
     }
 
-    .score-meter {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 11px;
+    .metric-bar::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:var(--scale-gradient);
     }
 
-    .metric-bar {
-      width: 100%;
-      height: 8px;
-      border-radius: 999px;
-      background: #e2e8f0;
-      overflow: hidden;
-      position: relative;
+    /* dot indicates current placement */
+    .meter-dot{
+      position:absolute;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:12px;height:12px;border-radius:999px;
+      background:#0f172a;
+      border:2px solid #fff;
+      box-shadow:0 1px 4px rgba(0,0,0,.35);
     }
 
-    .metric-fill {
-      height: 100%;
-      border-radius: inherit;
-      background: var(--rainbow-gradient);
-      transform-origin: left;
+    .score-desc-row{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      color:#94a3b8;
     }
 
-    .score-desc-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      color: #94a3b8;
-    }
-
-    .score-desc-row strong {
-      color: #0f172a;
-    }
+    .score-desc-row strong{color:#0f172a;}
 
     /* Risk list + table */
-    .risk-list {
-      margin-top: 12px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 8px;
-      font-size: 13px;
+    .risk-list{
+      margin-top:12px;
+      display:grid;
+      gap:8px;
+      font-size:13px;
     }
 
-    .risk-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+    .risk-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
     }
 
-    .risk-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .risk-left{
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
 
-    .risk-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      background: #e0f2fe;
+    .risk-icon{
+      width:22px;height:22px;border-radius:999px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:13px;background:#e0f2fe;border:1px solid #bae6fd;
     }
 
-    .risk-label {
-      font-weight: 500;
+    .risk-label{font-weight:600;color:var(--ls-navy);}
+
+    .risk-level{
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#f1f5f9;
+      border:1px solid #e2e8f0;
+      white-space:nowrap;
     }
 
-    .risk-level {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #f1f5f9;
+    .risk-level--low{background:rgba(34,197,94,.12);color:#15803d;border-color:rgba(34,197,94,.25);}
+    .risk-level--moderate{background:rgba(250,204,21,.18);color:#92400e;border-color:rgba(250,204,21,.35);}
+    .risk-level--high{background:rgba(248,113,113,.16);color:#b91c1c;border-color:rgba(248,113,113,.28);}
+
+    .risk-footnote{
+      margin-top:10px;
+      font-size:11px;
+      color:#94a3b8;
     }
 
-    .risk-level--low {
-      background: rgba(34, 197, 94, 0.12);
-      color: #15803d;
+    .hazard-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      font-size:12px;
     }
 
-    .risk-level--moderate {
-      background: rgba(250, 204, 21, 0.18);
-      color: #92400e;
+    .hazard-table th,.hazard-table td{
+      padding:6px 0;
+      text-align:left;
     }
 
-    .risk-level--high {
-      background: rgba(248, 113, 113, 0.16);
-      color: #b91c1c;
-    }
-
-    .risk-footnote {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    .hazard-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 12px;
-    }
-
-    .hazard-table th,
-    .hazard-table td {
-      padding: 6px 0;
-      text-align: left;
-    }
-
-    .hazard-table th {
-      color: #94a3b8;
-      font-weight: 500;
-    }
+    .hazard-table th{color:#94a3b8;font-weight:600;}
 
     .hazard-table td:nth-child(2),
-    .hazard-table td:nth-child(3) {
-      text-align: right;
-    }
+    .hazard-table td:nth-child(3){text-align:right;}
 
-    .hazard-table tr + tr td {
-      border-top: 1px solid #e5e7eb;
-    }
+    .hazard-table tr + tr td{border-top:1px solid #e5e7eb;}
 
     /* Resilience catalog */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
+    .section-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
     }
 
-    .section-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+    .btn{
+      border-radius:999px;
+      padding:7px 14px;
+      border:1px solid transparent;
+      font-size:13px;
+      line-height:1.1;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:transparent;
+      color:var(--ls-blue);
+      text-decoration:none;
     }
 
-    .bundle-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+    .btn-primary{background:var(--ls-blue);color:#fff;border-color:var(--ls-blue);}
+    .btn-outline{background:#fff;border-color:#e2e8f0;color:var(--ls-blue);}
+
+    .bundle-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin-top:12px;
     }
 
-    @media (max-width: 900px) {
-      .bundle-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media(max-width:900px){
+      .bundle-grid{grid-template-columns:1fr;}
     }
 
-    .bundle-card {
-      border-radius: 10px;
-      padding: 14px 14px 12px;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 13px;
+    .bundle-card{
+      border-radius:12px;
+      padding:14px 14px 12px;
+      border:1px solid #e2e8f0;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:13px;
     }
 
-    .bundle-tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      align-self: flex-start;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #64748b;
+    .bundle-tag{
+      font-size:11px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:#f1f5f9;
+      align-self:flex-start;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#64748b;
+      border:1px solid #e2e8f0;
     }
 
-    .bundle-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ls-navy);
+    .bundle-title{
+      font-size:14px;
+      font-weight:700;
+      color:var(--ls-navy);
     }
 
-    .bundle-meta {
-      font-size: 12px;
-      color: #64748b;
+    .bundle-meta{font-size:12px;color:#64748b;}
+
+    .bundle-impact-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px 10px;
+      font-size:11px;
+      color:#0f172a;
     }
 
-    .bundle-impact-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 10px;
-      font-size: 11px;
-      color: #0f172a;
+    .impact-chip{
+      border-radius:999px;
+      padding:3px 8px;
+      background:#ecfdf5;
+      color:#15803d;
+      border:1px solid #bbf7d0;
     }
 
-    .impact-chip {
-      border-radius: 999px;
-      padding: 3px 8px;
-      background: #ecfdf5;
-      color: #15803d;
+    .impact-chip--amber{
+      background:#fffbeb;
+      color:#92400e;
+      border:1px solid #fde68a;
     }
 
-    .impact-chip--amber {
-      background: #fffbeb;
-      color: #92400e;
+    .bundle-footer{
+      margin-top:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
     }
 
-    .bundle-footer {
-      margin-top: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
+    .bundle-score{color:#16a34a;}
+    .bundle-btn{font-size:12px;padding:6px 10px;}
+
+    .policy-list{
+      margin-top:10px;
+      font-size:12px;
+      color:#64748b;
+      padding-left:18px;
     }
 
-    .bundle-score {
-      color: #16a34a;
-    }
+    .policy-list li{margin-bottom:4px;}
 
-    .bundle-btn {
-      font-size: 12px;
-      padding: 6px 10px;
-    }
-
-    /* Policy impact */
-    .policy-list {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #64748b;
-      padding-left: 18px;
-    }
-
-    .policy-list li {
-      margin-bottom: 4px;
-    }
-
-    footer {
-      padding: 16px 24px 24px;
-      font-size: 11px;
-      color: #94a3b8;
-      text-align: center;
+    footer{
+      padding:16px 24px 24px;
+      font-size:11px;
+      color:#94a3b8;
+      text-align:center;
     }
   </style>
 </head>
+
 <body class="page">
 <header>
   <div class="header-inner">
-    <div>
-      <div class="logo" aria-label="Lightspark">
-        <div class="logo-mark" aria-hidden="true"></div>
-        <span>Lightspark</span>
-      </div>
+    <div class="brand">
+      <img src="homeinsightsnavigator.png" alt="Home Insights Navigator" class="logo-image" />
       <div class="tagline">Insurance Risk Portal</div>
     </div>
-    <div class="pill">
-      <span class="pill-dot" aria-hidden="true"></span>
-      <span>Underwriting view • Not client-facing</span>
+
+    <div class="top-right">
+      <div class="pill">
+        <span class="pill-dot" aria-hidden="true"></span>
+        <span>Underwriting view • Not client-facing</span>
+      </div>
     </div>
   </div>
 </header>
 
 <main>
   <section class="layout" aria-label="Insurance Risk Portal">
-    <!-- LEFT: Property + climate risk -->
+    <!-- LEFT -->
     <div>
       <article class="card" aria-label="Property exposure overview">
         <div class="section-title">Property context</div>
 
         <div class="property-header">
-          <!-- Updated exposure map with Risk.png -->
           <div class="property-photo">
-            <img
-              src="Risk.png"
-              alt="Exposure Map"
-              style="
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 10px;
-              "
-            />
-
-            <!-- OPTIONAL overlays: keep or delete -->
+            <img src="Risk.png" alt="Exposure map" />
             <div class="map-overlay-chips" aria-hidden="true">
-              <div class="map-chip">
-                <span class="map-dot"></span>
-                Flood fringe
-              </div>
-              <div class="map-chip">
-                <span class="map-dot" style="background:#4ade80;"></span>
-                Low wildfire
-              </div>
+              <div class="map-chip"><span class="map-dot"></span>Flood fringe</div>
+              <div class="map-chip"><span class="map-dot" style="background:#4ade80;"></span>Low wildfire</div>
             </div>
           </div>
 
-          <!-- Right column: property info -->
           <div class="property-meta">
             <div>
-              <div class="property-meta-top">
-                <h1>1234 Main Street</h1>
-                <div class="property-address">Vancouver, BC • Grandview-Woodland</div>
-              </div>
+              <h1>1234 Main Street</h1>
+              <div class="property-address">Vancouver, BC • Grandview-Woodland</div>
 
               <div class="line-row">
                 <span><strong>Policy:</strong> Homeowner – Comprehensive</span>
@@ -779,11 +672,63 @@
           </div>
         </div>
 
-        <!-- (scores-card block would sit here if you add it) -->
+        <!-- Scores (restored + consistent scale bars) -->
+        <div class="scores-card">
+          <div class="scores-header">
+            <div>
+              <div class="section-title">Climate scores</div>
+              <h2>Normalized 1–5 peril scores</h2>
+            </div>
+          </div>
 
+          <div class="score-grid" aria-label="Peril score grid">
+            <div class="score-card">
+              <div class="score-label"><span class="score-icon" aria-hidden="true">🌊</span>Flood</div>
+              <div class="score-value">4 / 5</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <span class="meter-dot" style="left:80%;"></span>
+                </div>
+                <div class="score-desc-row"><span>Lower</span><span><strong>Higher</strong></span></div>
+              </div>
+            </div>
+
+            <div class="score-card">
+              <div class="score-label"><span class="score-icon" aria-hidden="true">☔</span>Surface water</div>
+              <div class="score-value">5 / 5</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <span class="meter-dot" style="left:94%;"></span>
+                </div>
+                <div class="score-desc-row"><span>Lower</span><span><strong>Higher</strong></span></div>
+              </div>
+            </div>
+
+            <div class="score-card">
+              <div class="score-label"><span class="score-icon" aria-hidden="true">🔥</span>Wildfire</div>
+              <div class="score-value">1 / 5</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <span class="meter-dot" style="left:18%;"></span>
+                </div>
+                <div class="score-desc-row"><span>Lower</span><span><strong>Higher</strong></span></div>
+              </div>
+            </div>
+
+            <div class="score-card">
+              <div class="score-label"><span class="score-icon" aria-hidden="true">💨</span>Wind / storm</div>
+              <div class="score-value">3 / 5</div>
+              <div class="score-meter">
+                <div class="metric-bar" aria-hidden="true">
+                  <span class="meter-dot" style="left:58%;"></span>
+                </div>
+                <div class="score-desc-row"><span>Lower</span><span><strong>Higher</strong></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
 
-      <!-- Peril breakdown text + table -->
       <article class="card" aria-label="Peril breakdown">
         <div class="section-title">Peril breakdown</div>
         <h2>Key drivers behind the 1–5 scores</h2>
@@ -822,28 +767,28 @@
 
         <table class="hazard-table" aria-label="Hazard detail">
           <thead>
-          <tr>
-            <th scope="col">Peril signal</th>
-            <th scope="col">Model indicator</th>
-            <th scope="col">Portfolio percentile</th>
-          </tr>
+            <tr>
+              <th scope="col">Peril signal</th>
+              <th scope="col">Model indicator</th>
+              <th scope="col">Portfolio percentile</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1–in–100 flood depth</td>
-            <td>0.3–0.6 m</td>
-            <td>Top 30% risk</td>
-          </tr>
-          <tr>
-            <td>Surface water accumulation</td>
-            <td>High</td>
-            <td>Top 20% risk</td>
-          </tr>
-          <tr>
-            <td>Wildfire interface</td>
-            <td>Urban core</td>
-            <td>Bottom 25% risk</td>
-          </tr>
+            <tr>
+              <td>1–in–100 flood depth</td>
+              <td>0.3–0.6 m</td>
+              <td>Top 30% risk</td>
+            </tr>
+            <tr>
+              <td>Surface water accumulation</td>
+              <td>High</td>
+              <td>Top 20% risk</td>
+            </tr>
+            <tr>
+              <td>Wildfire interface</td>
+              <td>Urban core</td>
+              <td>Bottom 25% risk</td>
+            </tr>
           </tbody>
         </table>
 
@@ -854,9 +799,8 @@
       </article>
     </div>
 
-    <!-- RIGHT: Resilience catalog + policy impact -->
+    <!-- RIGHT -->
     <div>
-      <!-- Resilience upgrades -->
       <article class="card" aria-label="Resilience upgrade catalog">
         <div class="section-header">
           <div>
@@ -871,8 +815,10 @@
           </div>
         </div>
 
-        <p>Measures below are pre-matched to location and construction and can be used to support
-          coverage decisions, deductibles, or discounts.</p>
+        <p>
+          Measures below are pre-matched to location and construction and can be used to support
+          coverage decisions, deductibles, or discounts.
+        </p>
 
         <div class="bundle-grid" aria-label="Resilience measures">
           <article class="bundle-card">
@@ -941,7 +887,6 @@
         </div>
       </article>
 
-      <!-- Policy impact -->
       <article class="card" aria-label="Policy & pricing impact">
         <div class="section-title">Policy impact</div>
         <h2>Underwriting notes &amp; pricing levers</h2>
